@@ -1,0 +1,325 @@
+/* File: src/pages/DocViewer.css */
+/* Styles for the documentation viewer page */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   HEADER BAR
+   ═══════════════════════════════════════════════════════════════════════════ */
+.docHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.docBackLink {
+  color: var(--text-tertiary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.docBackLink:hover {
+  color: var(--accent-cyan);
+}
+
+.docTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex: 1;
+  justify-content: center;
+  min-width: 0;
+}
+
+.docIcon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.docTitle {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   DOCUMENT CONTENT — rendered markdown
+   ═══════════════════════════════════════════════════════════════════════════ */
+.docContent {
+  line-height: 1.7;
+}
+
+/* Hide the h1 from the markdown since we show it in the header bar */
+.docContent > h1:first-child {
+  display: none;
+}
+
+/* Offset anchor scroll to account for sticky header */
+.docContent h1,
+.docContent h2,
+.docContent h3,
+.docContent h4 {
+  scroll-margin-top: 7rem;
+}
+
+/* Headings */
+.docContent h1 {
+  font-size: 1.75rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin: var(--space-6) 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--stroke-subtle);
+}
+
+.docContent h2 {
+  font-size: 1.4rem;
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin: var(--space-6) 0 var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--stroke-subtle);
+}
+
+.docContent h3 {
+  font-size: 1.15rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: var(--space-5) 0 var(--space-2);
+}
+
+.docContent h4 {
+  font-size: 1rem;
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+/* Paragraphs */
+.docContent p {
+  color: var(--text-secondary);
+  font-size: var(--text-base);
+  margin: 0 0 var(--space-3);
+}
+
+/* Links */
+.docContent a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.docContent a:hover {
+  color: var(--text-primary);
+  text-decoration: underline;
+}
+
+/* Lists */
+.docContent ul,
+.docContent ol {
+  color: var(--text-secondary);
+  padding-left: var(--space-5);
+  margin: 0 0 var(--space-3);
+}
+
+.docContent li {
+  margin-bottom: var(--space-1);
+}
+
+.docContent li::marker {
+  color: var(--text-tertiary);
+}
+
+/* Nested lists */
+.docContent li > ul,
+.docContent li > ol {
+  margin-top: var(--space-1);
+  margin-bottom: 0;
+}
+
+/* Bold and strong */
+.docContent strong {
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+}
+
+/* Inline code */
+.docContent code {
+  font-family: var(--font-mono, 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace);
+  font-size: 0.88em;
+  background: var(--surface-3, rgba(255, 255, 255, 0.06));
+  color: var(--accent-cyan);
+  padding: 0.15em 0.4em;
+  border-radius: var(--radius-sm);
+}
+
+/* Code blocks */
+.docContent pre {
+  background: var(--surface-1, rgba(0, 0, 0, 0.3));
+  border: 1px solid var(--stroke-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin: 0 0 var(--space-4);
+  overflow-x: auto;
+}
+
+.docContent pre code {
+  background: none;
+  color: var(--text-secondary);
+  padding: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+/* Tables */
+.docContent table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.docContent thead th {
+  background: var(--surface-2, rgba(255, 255, 255, 0.04));
+  color: var(--text-primary);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 2px solid var(--stroke-subtle);
+}
+
+.docContent tbody td {
+  color: var(--text-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--stroke-subtle);
+}
+
+.docContent tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Blockquotes */
+.docContent blockquote {
+  background: var(--surface-2, rgba(255, 255, 255, 0.04));
+  border-left: 3px solid var(--accent-cyan);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--space-3) var(--space-4);
+  margin: 0 0 var(--space-4);
+}
+
+.docContent blockquote p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.docContent blockquote p strong {
+  color: var(--accent-cyan);
+}
+
+/* Horizontal rules */
+.docContent hr {
+  border: none;
+  border-top: 1px solid var(--stroke-subtle);
+  margin: var(--space-6) 0;
+}
+
+/* Images */
+.docContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RELATED DOCS
+   ═══════════════════════════════════════════════════════════════════════════ */
+.docRelated {
+}
+
+.docRelatedHeading {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4);
+}
+
+.docRelatedGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-3);
+}
+
+.docRelatedCard {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface-2, rgba(255, 255, 255, 0.04));
+  border: 1px solid var(--stroke-subtle);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out);
+}
+
+.docRelatedCard:hover {
+  border-color: var(--accent-cyan);
+  background: var(--surface-3, rgba(255, 255, 255, 0.06));
+}
+
+.docRelatedIcon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.docRelatedTitle {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.docRelatedDesc {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--text-tertiary);
+  line-height: 1.4;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .docHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .docTitleRow {
+    justify-content: flex-start;
+  }
+
+  .docTitle {
+    font-size: var(--text-lg);
+    white-space: normal;
+  }
+
+  .docContent pre {
+    padding: var(--space-3);
+  }
+
+  .docContent table {
+    font-size: 0.8rem;
+  }
+
+  .docContent thead th,
+  .docContent tbody td {
+    padding: var(--space-1) var(--space-2);
+  }
+}

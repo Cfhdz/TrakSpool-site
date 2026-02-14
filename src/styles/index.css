@@ -1,0 +1,17 @@
+/* File: src/styles/index.css */
+/* Main stylesheet - imports all CSS in correct order */
+
+/* 1. Design tokens - colors, typography, spacing */
+@import './theme.css';
+
+/* 2. Global resets and base styles */
+@import './global.css';
+
+/* 3. Layout - header, footer, navigation */
+@import './layout.css';
+
+/* 4. Components - base + enhanced merged into one file */
+@import './components.css';
+
+/* 5. Settings panel - user customization UI */
+@import './settings.css';

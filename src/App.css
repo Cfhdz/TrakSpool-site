@@ -1,0 +1,8 @@
+/* File: src/App.css */
+/* App-specific styles that don't conflict with the design system */
+
+/* Feature icon color - used by FeatureIcon component */
+.featureIcon {
+  color: var(--accent-cyan);
+  flex-shrink: 0;
+}

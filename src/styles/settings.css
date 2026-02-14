@@ -1,0 +1,336 @@
+/* File: src/styles/settings.css */
+/* Settings panel styles */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SETTINGS BUTTON (Floating)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsButton {
+  position: fixed;
+  bottom: var(--space-6);
+  left: var(--space-6);
+  z-index: 45;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  
+  border-radius: var(--radius-full);
+  border: 1px solid var(--stroke-default);
+  background: var(--surface-3);
+  color: var(--text-secondary);
+  
+  cursor: pointer;
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
+  box-shadow: var(--shadow-md);
+  
+  transition: 
+    transform var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.settingsButton:hover {
+  transform: scale(1.05);
+  background: var(--surface-hover);
+  border-color: var(--stroke-emphasis);
+  color: var(--text-primary);
+}
+
+.settingsButton:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.settingsButton svg {
+  animation: settingsRotate 20s linear infinite;
+}
+
+@keyframes settingsRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.settingsButton:hover svg {
+  animation-duration: 2s;
+}
+
+/* Mobile positioning */
+@media (max-width: 640px) {
+  .settingsButton {
+    bottom: var(--space-4);
+    left: var(--space-4);
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SETTINGS PANEL
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsPanel {
+  position: fixed;
+  bottom: var(--space-20);
+  left: var(--space-6);
+  z-index: 50;
+  
+  width: 380px;
+  max-height: calc(100vh - var(--space-24));
+  
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--stroke-default);
+  background: var(--surface-2);
+  box-shadow: 
+    var(--shadow-xl),
+    0 0 0 1px var(--stroke-emphasis);
+  
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  
+  animation: settingsPanelSlideIn var(--duration-normal) var(--ease-out);
+}
+
+@keyframes settingsPanelSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Mobile: Full width at bottom */
+@media (max-width: 640px) {
+  .settingsPanel {
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-16);
+    width: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL HEADER
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsPanelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--stroke-subtle);
+  background: var(--surface-3);
+}
+
+.settingsPanelTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.settingsPanelClose {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  
+  border: none;
+  background: transparent;
+  color: var(--text-tertiary);
+  border-radius: var(--radius-md);
+  
+  cursor: pointer;
+  transition: 
+    background var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.settingsPanelClose:hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   PANEL CONTENT
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsPanelContent {
+  padding: var(--space-5);
+  overflow-y: auto;
+  flex: 1;
+}
+
+/* Settings Section */
+.settingsSection {
+  margin-bottom: var(--space-6);
+}
+
+.settingsSection:last-child {
+  margin-bottom: 0;
+}
+
+.settingsLabel {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   BUTTON GROUP (for Theme, Font Size)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsButtonGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: var(--space-2);
+}
+
+.settingsOption {
+  padding: var(--space-3);
+  
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke-default);
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  
+  cursor: pointer;
+  transition: 
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.settingsOption:hover {
+  background: var(--surface-2);
+  border-color: var(--stroke-emphasis);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.settingsOption--active {
+  background: var(--accent-cyan-dim);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  font-weight: var(--weight-semibold);
+}
+
+.settingsOption--active:hover {
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   SELECT OPTIONS (for Font Family)
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsSelect {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.settingsSelectOption {
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke-default);
+  background: var(--surface-1);
+  
+  cursor: pointer;
+  transition: 
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+
+.settingsSelectOption:hover {
+  background: var(--surface-2);
+  border-color: var(--stroke-emphasis);
+  transform: translateY(-1px);
+}
+
+.settingsSelectOption--active {
+  background: var(--accent-cyan-dim);
+  border-color: var(--accent-cyan);
+}
+
+.settingsSelectOption--active:hover {
+  transform: translateY(0);
+}
+
+.settingsSelectOptionName {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+}
+
+.settingsSelectOption--active .settingsSelectOptionName {
+  color: var(--accent-cyan);
+}
+
+.settingsSelectOptionDesc {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESET BUTTON
+   ═══════════════════════════════════════════════════════════════════════════ */
+.settingsReset {
+  width: 100%;
+  padding: var(--space-3);
+  
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  
+  border-radius: var(--radius-md);
+  border: 1px solid var(--stroke-default);
+  background: var(--surface-1);
+  color: var(--text-secondary);
+  
+  cursor: pointer;
+  transition: 
+    background var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.settingsReset:hover {
+  background: var(--surface-2);
+  border-color: var(--stroke-emphasis);
+  color: var(--text-primary);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .settingsButton svg {
+    animation: none;
+  }
+  
+  .settingsPanel {
+    animation: none;
+  }
+}

@@ -1,0 +1,7 @@
+# robots.txt for TrakSpool
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://trakspool.com/sitemap.xml
