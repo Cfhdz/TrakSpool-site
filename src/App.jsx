@@ -17,6 +17,7 @@ import DocViewer from "./pages/DocViewer.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import ToS from "./pages/ToS.jsx";
+import Flasher from "./pages/Flasher.jsx";
 
 function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -136,6 +137,9 @@ export default function App() {
           <Route path="/resources/:slug" element={<DocViewer />} />
           <Route path="/support" element={<Support />} />
           <Route path="/contact" element={<Contact />} />
+
+          {/* Tools */}
+          <Route path="/flasher" element={<Flasher />} />
 
           {/* Legal */}
           <Route path="/privacy" element={<Privacy />} />
