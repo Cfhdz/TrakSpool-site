@@ -1,6 +1,6 @@
 # TrakSpool RFID Tag Guide
 
-**Firmware Version:** 0.1.0
+**Firmware Version:** 0.1.1
 **Last Updated:** 2025-02-11
 
 This guide covers which NFC tags work with TrakSpool, where to buy them, how to place them on your spools, and how they interoperate with Prusa printers via the OpenPrintTag standard.

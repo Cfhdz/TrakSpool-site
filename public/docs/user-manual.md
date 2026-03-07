@@ -1,6 +1,6 @@
 # TrakSpool User Manual
 
-**Firmware Version:** 0.1.0
+**Firmware Version:** 0.1.1
 **Last Updated:** 2025-02-11
 
 Complete reference for all TrakSpool features, settings, and workflows. For first-time setup, see the **Quick Start Guide**.
@@ -262,7 +262,7 @@ Erases calibration data. The scale reverts to showing raw ADC values. You'll nee
 
 ### Firmware Version
 
-Displays the current firmware version (e.g. "FW: 0.1.0"). This is an info-only display.
+Displays the current firmware version (e.g. "FW: 0.1.1"). This is an info-only display.
 
 ### Reboot
 
@@ -469,7 +469,7 @@ TrakSpool (Main Menu)
 │   ├── Clear Cal
 │   └── Back
 └── System
-    ├── FW: 0.1.0 [Info]
+    ├── FW: 0.1.1 [Info]
     ├── Reboot
     └── Back
 ```

@@ -1,6 +1,6 @@
 # TrakSpool Troubleshooting
 
-**Firmware Version:** 0.1.0
+**Firmware Version:** 0.1.1
 **Last Updated:** 2025-02-11
 
 Solutions for common issues. If your problem isn't listed here, check the **User Manual** for detailed feature documentation.

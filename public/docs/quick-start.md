@@ -1,6 +1,6 @@
 # TrakSpool Quick Start Guide
 
-**Firmware Version:** 0.1.0
+**Firmware Version:** 0.1.1
 **Last Updated:** 2025-02-11
 
 Get your TrakSpool up and running in minutes. This guide walks you through first-time setup: powering on, connecting to WiFi, calibrating the scale, creating a filament preset, and tagging your first spool.
