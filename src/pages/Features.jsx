@@ -50,8 +50,8 @@ export default function Features() {
               <h2 className="spotlightTitle">Know exactly what's left</h2>
               <p className="spotlightDesc">
                 A high-resolution load cell with 24-bit ADC reads your spool
-                weight in real time — accurate to within half a gram. No more
-                guessing, no more kitchen scales.
+                weight in real time — accurate, No more
+                guessing, no more kitchen scales, no more spreadsheets.
               </p>
               <ul className="spotlightList">
                 <li>Automatic empty spool weight subtraction</li>
@@ -81,6 +81,7 @@ export default function Features() {
                 <li>Works with any spool — just add a tag</li>
                 <li>Filter and search across your entire collection</li>
                 <li>Track storage locations across your shop</li>
+                <li>Track unopened spools too</li>
               </ul>
             </div>
             <div className="spotlightVisual">
@@ -101,7 +102,7 @@ export default function Features() {
               "Stability detection filters out noise",
               "Live updates as filament is consumed",
             ]}
-            summary="Know exactly how much filament remains, within half a gram."
+            summary="Know exactly how much filament remains, within about half a gram."
           />
 
           <FeatureCard
@@ -135,7 +136,7 @@ export default function Features() {
               "Hosted locally on the device",
               "Accessible from any browser on your network",
               "Mobile-friendly responsive layout",
-              "No apps to install, no accounts to create",
+              "No accounts to create, app if you want it. (app coming soon)",
             ]}
             summary="Manage your inventory and settings from any device."
           />
@@ -144,8 +145,7 @@ export default function Features() {
             icon="local"
             title="Fully local, fully yours"
             features={[
-              "No cloud dependency or external services",
-              "No subscriptions or recurring fees",
+              "No cloud dependency",
               "Works completely offline",
               "Your data never leaves your network",
             ]}
@@ -159,17 +159,17 @@ export default function Features() {
             </div>
 
             <ul className="cardList">
-              <li>Arduino Nano ESP32-S3 (dual-core, 240MHz)</li>
+              <li>ESP32-S3 (dual-core, 240MHz) Architecture</li>
               <li>Wi-Fi 802.11 b/g/n + Bluetooth LE</li>
               <li>Precision strain gauge load cell</li>
-              <li>MFRC522 NFC/RFID reader (ISO 15693 Type-5)</li>
-              <li>128×64 OLED display + EC11 rotary encoder</li>
+              <li>NFC/RFID reader (ISO 15693 Type-5)</li>
+              <li>OLED display - Rotary encoder - Confirm+Back Buttons</li>
             </ul>
 
             <p className="cardP featureCardSummary">
               <strong>Firmware</strong>
               <br />
-              Event-driven architecture with OTA updates and a built-in admin console.
+              Event-driven architecture with a built-in admin console.
             </p>
           </div>
         </div>
