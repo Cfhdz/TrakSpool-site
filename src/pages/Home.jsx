@@ -80,8 +80,8 @@ function TheProblem() {
           <div className="statCalloutIcon">🛑</div>
           <div className="statCalloutTitle">The mid-print runout</div>
           <p className="statCalloutDesc">
-            12-hour print, walk away, come back to a failed job — the
-            spool ran dry at 80%.
+            12-hour print, walk away, come back to a failed print, the
+            spool ran out at 80%.Sure it paused, but it was too late. The damage was done.
           </p>
         </div>
 
@@ -89,17 +89,15 @@ function TheProblem() {
           <div className="statCalloutIcon">❓</div>
           <div className="statCalloutTitle">The mystery spool</div>
           <p className="statCalloutDesc">
-            Half-used spools pile up. Which is PETG? Which PLA is the
-            good brand? No one knows.
+            Half-used spools pile up, is it enough for the next print? Are you going to chance it?
           </p>
         </div>
 
         <div className="statCallout">
           <div className="statCalloutIcon">⚖️</div>
-          <div className="statCalloutTitle">The guessing game</div>
+          <div className="statCalloutTitle">The tracking game</div>
           <p className="statCalloutDesc">
-            Slicer says 340g. The spool feels... maybe half full? Time
-            to pull out the kitchen scale.
+            Notepad? Spreadsheet? kitchen scale? There has to be a better way.
           </p>
         </div>
       </div>
@@ -111,15 +109,15 @@ function HowItWorks() {
   const steps = [
     {
       title: "Tag it",
-      description: "Stick an NFC tag on any spool. Enter the details once — or use a preset — and TrakSpool encodes the tag with everything: brand, material, color, temperatures, and weight."
+      description: "Stick an NFC tag on any spool." 
     },
     {
-      title: "Weigh it",
-      description: "Place the spool on TrakSpool. The precision load cell reads the weight, subtracts the empty spool, and shows you exactly how much filament remains."
+      title: "Track it",
+      description: "Place the spool on the TrakSpool S1. Enter the details once, or use a preset, and TrakSpool encodes the tag with all the details: brand, material, color, temperatures, and remaining weight."
     },
     {
-      title: "Print with confidence",
-      description: "Leave it on TrakSpool while you print. The remaining weight updates automatically as filament is used — accurate to within half a gram."
+      title: "Trust it",
+      description: "Check how much remains before you print, or leave it on TrakSpool while you print. The remaining weight updates automatically as filament is used."
     }
   ];
 
@@ -150,7 +148,7 @@ function WhatYouGet() {
             <p className="splitRowDesc">
               TrakSpool works with standard NFC Type 5 tags. Stick one on any
               spool you own — even spools from manufacturers that don't support
-              RFID. Ten tags are included with every unit.
+              RFID. Ten tags are included with every unit. Additional are available for purchase.
             </p>
           </div>
         </div>
@@ -163,9 +161,9 @@ function WhatYouGet() {
             <span className="splitRowTag">Core Feature</span>
             <h3 className="splitRowTitle">Inventory management</h3>
             <p className="splitRowDesc">
-              Every tagged spool is tracked in a searchable inventory. Filter by
+              Every tagged spool, and unopened spool entered in your library is tracked in a searchable inventory. Filter by
               color, material, brand, or remaining amount. Always know what you
-              have and where to find it — before you start your next print.
+              have and where to find it. The ROC feature recommends which spools to use so you don't waste filament.
             </p>
           </div>
         </div>
@@ -178,7 +176,7 @@ function WhatYouGet() {
             <span className="splitRowTag">Portable</span>
             <h3 className="splitRowTitle">Presets that travel</h3>
             <p className="splitRowDesc">
-              Save your print settings as presets. When you tag a spool, that
+              Save your filament parameters as presets. When you tag a spool, that
               data lives on the tag itself — temperatures, speeds, and notes
               move with the spool, not stuck on one device.
             </p>
@@ -193,9 +191,9 @@ function WhatYouGet() {
             <span className="splitRowTag">Flexible</span>
             <h3 className="splitRowTitle">Control it your way</h3>
             <p className="splitRowDesc">
-              Use the built-in OLED screen and rotary dial for quick access, or
-              open the web-based admin console from any browser on your network.
-              No app download required.
+              Use the built-in OLED screen and rotary dial for quick access,
+              open the web-based admin console from any browser on your network, 
+              use the mobile app (coming soon), or the desktop application for advanced features.
             </p>
           </div>
         </div>
@@ -210,8 +208,7 @@ function BuiltDifferent() {
       <div className="highlightBand">
         <h2 className="highlightBandTitle">No cloud. No subscription. No tracking.</h2>
         <p className="highlightBandDesc">
-          TrakSpool runs entirely on-device. Your filament inventory never
-          leaves your network — and it never will.
+          TrakSpool is flexible, simple if you want it to be, and powerful if you need it to be depending on where YOU are in your 3D printing journey.Just set it up and start tracking your filament inventory with confidence.
         </p>
         <div className="highlightPills">
           <span className="highlightPill">
