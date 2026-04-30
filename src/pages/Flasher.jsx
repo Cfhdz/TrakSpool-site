@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import usePageMeta from "../hooks/usePageMeta.js";
 import "./Flasher.css";
 
-const FIRMWARE_VERSION = "0.1.4";
+const FIRMWARE_VERSION = "0.1.5";
+const FIRMWARE_RELEASED = "4-29-2026";
 
 function StepCard({ number, title, description }) {
   return (
@@ -67,6 +68,7 @@ export default function Flasher() {
         <div className="flasher-versionCard">
           <div className="flasher-versionLabel">Latest Firmware</div>
           <div className="flasher-versionNumber">v{FIRMWARE_VERSION}</div>
+          <div className="flasher-versionDate">Updated {FIRMWARE_RELEASED}</div>
         </div>
       </section>
 
