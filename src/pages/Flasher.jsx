@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import usePageMeta from "../hooks/usePageMeta.js";
 import "./Flasher.css";
 
-const FIRMWARE_VERSION = "0.1.5";
-const FIRMWARE_RELEASED = "4-29-2026";
+const FIRMWARE_VERSION = "0.1.6";
+const FIRMWARE_RELEASED = "5-03-2026";
 
 function StepCard({ number, title, description }) {
   return (
