@@ -1,6 +1,7 @@
 {
   "name": "TrakSpool Firmware",
   "version": "0.1.7",
+  "released": "2026-06-13",
   "new_install_prompt_erase": true,
   "builds": [
     {

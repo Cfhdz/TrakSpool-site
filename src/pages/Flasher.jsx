@@ -3,9 +3,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import usePageMeta from "../hooks/usePageMeta.js";
 import "./Flasher.css";
+import flasherManifest from "../../public/flasher/manifest.json";
 
-const FIRMWARE_VERSION = "0.1.6";
-const FIRMWARE_RELEASED = "5-03-2026";
+// Single source of truth: the flasher manifest that ships the binaries.
+// Keeps this page from drifting out of sync with the actual firmware.
+const FIRMWARE_VERSION = flasherManifest.version;
+const FIRMWARE_RELEASED = flasherManifest.released;
 
 function StepCard({ number, title, description }) {
   return (
