@@ -9,6 +9,7 @@ import flasherManifest from "../../public/flasher/manifest.json";
 // Keeps this page from drifting out of sync with the actual firmware.
 const FIRMWARE_VERSION = flasherManifest.version;
 const FIRMWARE_RELEASED = flasherManifest.released;
+const FIRMWARE_CHANGES = flasherManifest.changes ?? [];
 
 function StepCard({ number, title, description }) {
   return (
@@ -73,6 +74,16 @@ export default function Flasher() {
           <div className="flasher-versionNumber">v{FIRMWARE_VERSION}</div>
           <div className="flasher-versionDate">Updated {FIRMWARE_RELEASED}</div>
         </div>
+        {FIRMWARE_CHANGES.length > 0 && (
+          <div className="flasher-changes">
+            <div className="flasher-changesTitle">What&apos;s new in v{FIRMWARE_VERSION}</div>
+            <ul className="flasher-changesList">
+              {FIRMWARE_CHANGES.map((change) => (
+                <li key={change}>{change}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </section>
 
       {/* Steps */}

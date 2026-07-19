@@ -1,7 +1,13 @@
 {
   "name": "TrakSpool Firmware",
-  "version": "0.1.7",
-  "released": "2026-06-13",
+  "version": "0.1.8",
+  "released": "2026-07-18",
+  "changes": [
+    "New spool fast path: when a blank tag is detected, tag directly from a saved preset instead of stepping through the wizard",
+    "Empty spool weight is computed automatically from the scale reading (gross weight minus the preset's nominal filament weight)",
+    "Falls back to the pre-filled tagging wizard when no presets are saved or no scale reading is available",
+    "Declining the new-tag prompt now returns to the home screen"
+  ],
   "new_install_prompt_erase": true,
   "builds": [
     {
