@@ -1,12 +1,12 @@
 {
   "name": "TrakSpool Firmware",
-  "version": "0.1.8",
-  "released": "2026-07-18",
+  "version": "0.1.9",
+  "released": "2026-08-04",
   "changes": [
-    "New spool fast path: when a blank tag is detected, tag directly from a saved preset instead of stepping through the wizard",
-    "Empty spool weight is computed automatically from the scale reading (gross weight minus the preset's nominal filament weight)",
-    "Falls back to the pre-filled tagging wizard when no presets are saved or no scale reading is available",
-    "Declining the new-tag prompt now returns to the home screen"
+    "Fixed false \"Refill Detected\" popups after consuming filament — transient weights during spool placement/removal could corrupt the tag's consumed value",
+    "Tag writes and refill/empty-correction decisions now require the weight to be genuinely settled (within 2g for 2s) and the tag to be firmly present",
+    "Refill and empty-correction confirmation windows are now real wall-clock time (3s) instead of loop ticks",
+    "Refill detection threshold default raised to 400g (user-set values are kept)"
   ],
   "new_install_prompt_erase": true,
   "builds": [
