@@ -1,12 +1,10 @@
 {
   "name": "TrakSpool Firmware",
-  "version": "0.1.9",
-  "released": "2026-08-04",
+  "version": "0.1.10",
+  "released": "2026-08-23",
   "changes": [
-    "Fixed false \"Refill Detected\" popups after consuming filament — transient weights during spool placement/removal could corrupt the tag's consumed value",
-    "Tag writes and refill/empty-correction decisions now require the weight to be genuinely settled (within 2g for 2s) and the tag to be firmly present",
-    "Refill and empty-correction confirmation windows are now real wall-clock time (3s) instead of loop ticks",
-    "Refill detection threshold default raised to 400g (user-set values are kept)"
+    "Fixed Wi-Fi networks picked from the OLED menu never connecting — the device required WPA2-PSK and silently refused WPA-only, WPA/WPA2-mixed and WPA3-transition access points even though they appeared in the scan list",
+    "Fixed \"Enter SSID\" manual entry failing to connect when no network scan had been run first — the radio is now started before credentials are stored"
   ],
   "new_install_prompt_erase": true,
   "builds": [
