@@ -1,11 +1,10 @@
 {
   "name": "TrakSpool Firmware",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "released": "2026-08-23",
   "changes": [
-    "Fixed BLE provisioning failing after credentials were entered, and the network list coming up empty on every attempt after the first — the device's Wi-Fi auto-join was competing with the provisioning manager for the radio",
-    "Fixed the OLED network scan reporting \"Scan failed\" instantly when the Wi-Fi radio had been initialised but not actually started",
-    "Wi-Fi auto-join now makes 10 attempts instead of 3 before giving up, so a brief router outage no longer disables Wi-Fi until the device is power-cycled"
+    "Fixed the BLE provisioning app showing an empty network list — starting a provisioning session was stopping the Wi-Fi radio immediately before the network scan ran, so the device could never find any networks to report",
+    "The provisioning session now brings the radio up itself, so it no longer depends on Wi-Fi already being switched on or on a prior scan from the OLED menu"
   ],
   "new_install_prompt_erase": true,
   "builds": [
