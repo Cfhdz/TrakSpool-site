@@ -1,10 +1,11 @@
 {
   "name": "TrakSpool Firmware",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "released": "2026-08-23",
   "changes": [
-    "Fixed Wi-Fi networks picked from the OLED menu never connecting — the device required WPA2-PSK and silently refused WPA-only, WPA/WPA2-mixed and WPA3-transition access points even though they appeared in the scan list",
-    "Fixed \"Enter SSID\" manual entry failing to connect when no network scan had been run first — the radio is now started before credentials are stored"
+    "Fixed BLE provisioning failing after credentials were entered, and the network list coming up empty on every attempt after the first — the device's Wi-Fi auto-join was competing with the provisioning manager for the radio",
+    "Fixed the OLED network scan reporting \"Scan failed\" instantly when the Wi-Fi radio had been initialised but not actually started",
+    "Wi-Fi auto-join now makes 10 attempts instead of 3 before giving up, so a brief router outage no longer disables Wi-Fi until the device is power-cycled"
   ],
   "new_install_prompt_erase": true,
   "builds": [
