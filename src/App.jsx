@@ -1,6 +1,7 @@
 // File: src/App.jsx
 import { useState, useEffect } from "react";
 import { Routes, Route, NavLink, Link, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import ThemeToggle from "./components/ThemeToggle.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ScrollToTopOnRouteChange from "./components/ScrollToTopOnRouteChange.jsx";
@@ -156,6 +157,9 @@ export default function App() {
       
       {/* Settings panel - floating button bottom-left */}
       <SettingsPanel />
+
+      {/* Vercel Web Analytics - cookieless page views */}
+      <Analytics />
     </>
   );
 }
