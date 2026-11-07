@@ -1,10 +1,18 @@
 {
   "name": "TrakSpool Firmware",
-  "version": "0.1.12",
-  "released": "2026-08-23",
+  "version": "2.0.1",
+  "released": "2026-11-07",
   "changes": [
-    "Fixed the BLE provisioning app showing an empty network list — starting a provisioning session was stopping the Wi-Fi radio immediately before the network scan ran, so the device could never find any networks to report",
-    "The provisioning session now brings the radio up itself, so it no longer depends on Wi-Fi already being switched on or on a prior scan from the OLED menu"
+    "Redesigned admin console: colours taken from the TrakSpool logo, a sidebar on computers and a tab bar on phones, and no fonts loaded from the internet",
+    "Wi-Fi joining reworked: a network that cannot be joined is retried with a growing pause instead of non-stop, so network scans and BLE setup are no longer blocked, and a corrected password now joins from the device screen",
+    "BLE setup can be tried again after a failed join, and saving a network on the device switches on Wi-Fi, autojoin and the web console",
+    "Tag operations from the web console and the device no longer collide: the device does one tag operation at a time, and the console is told when it is busy",
+    "Opening the Tag Spool dialog can no longer leave Autotag switched off; it is now paused only while the dialog is open",
+    "The empty-spool weight correction now asks on the device screen and changes the tag only after you confirm",
+    "Autotag no longer writes to a tag while the scale is uncalibrated, no longer re-imports a spool it already knows, and reads tags written by other OpenPrintTag tools",
+    "Editing a brand, colour or temperature profile keeps the entry's other data, and brands now store their empty-spool weights",
+    "Saving to the device is safer against power loss, and a damaged or unusual tag can no longer freeze the device",
+    "Admin console: backups now include saved presets, custom material types and your own brands and colours; re-importing a backup no longer duplicates unopened spools and asks before overwriting their quantities; fixes for adding temperature profiles, cancelling a calibration and typing into dropdown fields"
   ],
   "new_install_prompt_erase": true,
   "builds": [
