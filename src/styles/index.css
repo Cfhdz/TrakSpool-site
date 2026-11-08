@@ -1,17 +1,19 @@
 /* File: src/styles/index.css */
-/* Main stylesheet - imports all CSS in correct order */
+/* Shared stylesheets, in cascade order. src/main.jsx imports this file before App, so these
+   come first in the built CSS and every stylesheet imported by a page follows them. On a tie
+   in specificity a later file wins. */
 
-/* 1. Design tokens - colors, typography, spacing */
+/* 1. Design tokens: a verbatim copy of the admin console's src/styles/theme.css */
 @import './theme.css';
 
-/* 2. Global resets and base styles */
+/* 2. Reset, element defaults and helpers */
 @import './global.css';
 
-/* 3. Layout - header, footer, navigation */
-@import './layout.css';
-
-/* 4. Components - base + enhanced merged into one file */
+/* 3. Shared component kit: the admin console's primitives (buttons, badges, cards...) */
 @import './components.css';
 
-/* 5. Settings panel - user customization UI */
-@import './settings.css';
+/* 4. Site shell: top bar, phone menu, page column, footer */
+@import './layout.css';
+
+/* 5. Site sections: hero, page heads, feature and file cards, steps, FAQ, legal text */
+@import './site.css';

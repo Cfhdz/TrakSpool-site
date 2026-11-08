@@ -1,314 +1,262 @@
 /* File: src/styles/global.css */
-/* Global reset, base typography, seamless page background, shared helpers */
+/* Reset and element defaults, built on the tokens in theme.css. Same as the admin console's
+   global.css except for the parts that belong to the console's shell (Text size setting,
+   phone tab bar). Component styles live in components.css (the shared kit), site.css and
+   layout.css, not here. */
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   RESET & BASE
-   ═══════════════════════════════════════════════════════════════════════════ */
-*, *::before, *::after {
+/* Reset: margin and padding are zeroed on everything, each component sets its own. */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html {
-  height: 100%;
-  scroll-behavior: smooth;
+  color-scheme: dark;
+  accent-color: var(--accent);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* The document is the scroller: keep anchors and focused elements clear of the sticky top bar. */
+  scroll-padding-top: calc(var(--topbar-h) + var(--sp-4));
+}
+
+html.light-mode {
+  color-scheme: light;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh);
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-body {
-  min-height: 100%;
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: var(--weight-normal);
-  line-height: var(--leading-normal);
-  letter-spacing: var(--tracking-normal);
-  color: var(--text-primary);
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     SEAMLESS TOP-TO-BOTTOM GRADIENT
-     No hard breaks - continuous flow from top to bottom
-     ───────────────────────────────────────────────────────────────────────── */
-  background-color: var(--bg-bottom);
-  background-image:
-    /* Purple accent glow - top left, fades smoothly */
-    radial-gradient(
-      ellipse 1000px 600px at 15% 5%,
-      var(--accent-purple-dim) 0%,
-      transparent 70%
-    ),
-    /* Cyan accent glow - top right, fades smoothly */
-    radial-gradient(
-      ellipse 900px 550px at 85% 8%,
-      var(--accent-cyan-dim) 0%,
-      transparent 65%
-    ),
-    /* Secondary purple glow - mid-left */
-    radial-gradient(
-      ellipse 700px 500px at 5% 45%,
-      var(--accent-purple-dim) 0%,
-      transparent 60%
-    ),
-    /* Subtle accent - bottom area */
-    radial-gradient(
-      ellipse 800px 400px at 70% 95%,
-      var(--accent-cyan-dim) 0%,
-      transparent 70%
-    ),
-    /* Main vertical gradient - seamless flow */
-    linear-gradient(
-      180deg,
-      var(--bg-top) 0%,
-      var(--bg-mid) 35%,
-      var(--bg-mid) 65%,
-      var(--bg-bottom) 100%
-    );
-  
-  background-attachment: fixed;
+/* Text elements: compact defaults for bare markup. Components override all of these. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   TYPOGRAPHY BASE
-   ═══════════════════════════════════════════════════════════════════════════ */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: var(--weight-bold);
-  line-height: var(--leading-tight);
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-primary);
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-4);
+h1 {
+  font-size: var(--fs-2xl);
 }
 
-h1:first-child,
-h2:first-child,
-h3:first-child,
-h4:first-child,
-h5:first-child,
-h6:first-child {
-  margin-top: 0;
+h2 {
+  font-size: var(--fs-xl);
 }
 
-p {
-  color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-4);
+h3 {
+  font-size: var(--fs-lg);
 }
 
-p:last-child {
-  margin-bottom: 0;
+/* A bare list is prose and keeps its bullets; a list with a class is a component.
+   Both rules have zero specificity, so any component rule overrides them. */
+:where(ul:not([class]), ol:not([class])) {
+  padding-left: 1.25rem;
 }
 
-ul, ol {
-  color: var(--text-secondary);
-  line-height: var(--leading-relaxed);
-  margin-bottom: var(--space-4);
-  padding-left: 1.5rem;
-}
-
-ul:last-child,
-ol:last-child {
-  margin-bottom: 0;
+:where(ul[class], ol[class]) {
+  list-style: none;
 }
 
 a {
-  color: inherit;
+  color: var(--accent-text);
   text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
 }
 
 a:hover {
-  color: var(--text-primary);
+  text-decoration: underline;
 }
 
-/* Focus visible for keyboard navigation */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-strong, b {
-  font-weight: var(--weight-semibold);
+strong,
+b {
+  font-weight: var(--fw-bold);
 }
 
 small {
-  font-size: var(--text-sm);
-  color: var(--text-tertiary);
+  font-size: var(--fs-xs);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   CODE & PREFORMATTED
-   ═══════════════════════════════════════════════════════════════════════════ */
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-mono);
+}
+
 code {
-  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-  font-size: 0.9em;
-  color: var(--accent-cyan);
+  padding: 0.1em 0.35em;
   background: var(--surface-2);
-  padding: 0.15em 0.4em;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--stroke-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  font-size: 0.93em;
 }
 
 pre {
-  font-family: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
-  font-size: var(--text-sm);
-  background: var(--surface-1);
-  border: 1px solid var(--stroke-default);
-  border-radius: var(--radius-md);
-  padding: var(--space-4);
+  padding: var(--sp-3);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
   overflow-x: auto;
 }
 
 pre code {
-  background: none;
-  border: none;
   padding: 0;
+  background: none;
+  border: 0;
+  font-size: inherit;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LAYOUT CONTAINER
-   ═══════════════════════════════════════════════════════════════════════════ */
-.container {
-  width: 100%;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-5) var(--space-12);
+hr {
+  height: 0;
+  margin: var(--sp-4) 0;
+  border: 0;
+  border-top: 1px solid var(--border);
 }
 
-/* Narrow container for text-heavy pages (Privacy, ToS, etc.) */
-.container.narrow {
-  max-width: 720px;
+/* Form controls take the page font and colour; buttons start with no chrome of their own. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
 }
 
-@media (max-width: 640px) {
-  .container {
-    padding: var(--space-4) var(--space-4) var(--space-10);
+button {
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+summary {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* Keyboard focus: the default ring for every focusable element. */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* Scrollbars: thin, in token colours. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+/* Browsers without the standard scrollbar properties (older Safari) */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-strong);
+    background-clip: content-box;
+    border: 2px solid transparent;
+    border-radius: var(--r-full);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--text-subtle);
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   AMBIENT BACKGROUND GLOW
-   Floating element for extra depth - respects reduced motion
-   ═══════════════════════════════════════════════════════════════════════════ */
-.ambientGlow {
-  position: fixed;
-  top: -150px;
-  left: -150px;
-  right: -150px;
-  height: 500px;
-  pointer-events: none;
-  z-index: -1;
-  filter: blur(var(--blur-xl));
-  opacity: 0.5;
-  background:
-    radial-gradient(
-      ellipse 50% 80% at 25% 30%,
-      var(--accent-purple-glow) 0%,
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 45% 70% at 75% 40%,
-      var(--accent-cyan-glow) 0%,
-      transparent 70%
-    );
-  animation: ambientFloat 12s ease-in-out infinite;
+/* Helpers */
+.num {
+  font-variant-numeric: tabular-nums;
 }
 
-@keyframes ambientFloat {
-  0%, 100% {
-    transform: translateY(0) scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateY(20px) scale(1.02);
-    opacity: 0.6;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ambientGlow {
-    animation: none;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   ACCESSIBILITY UTILITIES
-   ═══════════════════════════════════════════════════════════════════════════ */
-.srOnly {
+.visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
-  padding: 0;
   margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
+  padding: 0;
   border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* Skip link for keyboard users */
+/* Skip link: clipped to nothing until it receives keyboard focus. */
 .skipLink {
-  position: absolute;
-  top: -100%;
-  left: var(--space-4);
-  z-index: 100;
-  padding: var(--space-3) var(--space-4);
-  background: var(--surface-3);
-  border: 1px solid var(--stroke-emphasis);
-  border-radius: var(--radius-md);
-  color: var(--text-primary);
-  font-weight: var(--weight-medium);
-  transition: top var(--duration-fast) var(--ease-out);
+  position: fixed;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: calc(var(--z-nav) + 1);
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--control-h);
+  padding: 0 var(--sp-3);
+  background: var(--surface-overlay);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-2);
+  color: var(--text);
+  font-weight: var(--fw-bold);
 }
 
-.skipLink:focus {
-  top: var(--space-4);
+.skipLink:not(:focus) {
+  width: 1px;
+  height: 1px;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SELECTION STYLING
-   ═══════════════════════════════════════════════════════════════════════════ */
-::selection {
-  background: var(--accent-purple);
-  color: white;
-}
-
-::-moz-selection {
-  background: var(--accent-purple);
-  color: white;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   SCROLLBAR STYLING (webkit browsers)
-   ═══════════════════════════════════════════════════════════════════════════ */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--surface-1);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--surface-3);
-  border-radius: var(--radius-full);
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--stroke-emphasis);
-  background-clip: content-box;
-}
-
-/* Firefox scrollbar */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--surface-3) var(--surface-1);
+/* Reduced motion: stop every animation and transition, including inline ones. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

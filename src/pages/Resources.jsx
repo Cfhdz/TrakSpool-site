@@ -1,123 +1,132 @@
 // File: src/pages/Resources.jsx
+// Docs: the user guides (src/data/docs.js), build and developer docs, and outside links.
 import { Link } from "react-router-dom";
+import { ArrowRight, CircleHelp, Download, ExternalLink, FileCode, GitPullRequest, Hammer, Tag } from "lucide-react";
 import usePageMeta from "../hooks/usePageMeta.js";
+import { DOCS } from "../data/docs.js";
+
+const PLANNED = [
+  {
+    icon: <FileCode aria-hidden="true" />,
+    title: "API reference",
+    text: "The device's REST API, for integrating TrakSpool with other tools.",
+  },
+  {
+    icon: <GitPullRequest aria-hidden="true" />,
+    title: "Contributing guide",
+    text: "How to build the code, report a bug and send a change.",
+  },
+];
 
 export default function Resources() {
   usePageMeta({
-    title: "Resources",
-    description: "Documentation, firmware downloads, RFID tag guides, and technical resources for TrakSpool — coming at launch.",
+    title: "Docs",
+    description:
+      "TrakSpool documentation: quick start, user manual, RFID tag guide, troubleshooting, the firmware updater, and build and developer guides.",
   });
 
   return (
     <>
-      <section className="panel section sectionCentered">
-        <h1 className="pageTitle">Resources</h1>
-        <p style={{ color: 'var(--text-secondary)' }}>
-          Documentation, guides, and technical resources for TrakSpool.
-        </p>
-      </section>
+      <header className="pageHead">
+        <p className="eyebrow">Docs</p>
+        <h1 className="pageTitle">Documentation</h1>
+        <p className="lead">Guides for using TrakSpool, building one, and working on the code.</p>
+      </header>
 
-      <section className="panel section">
-        <h2 className="sectionTitle" style={{ textAlign: 'center' }}>Documentation</h2>
-
-        <div className="grid grid-3">
-          <Link to="/resources/quick-start" className="card cardLink">
-            <div className="cardHeader">
-              <div className="cardIcon">🚀</div>
-              <div className="cardH">Quick Start Guide</div>
-            </div>
-            <p className="cardP">
-              Step-by-step setup instructions to get your TrakSpool running in minutes.
-            </p>
-            <span className="cardLinkArrow">→</span>
-          </Link>
-
-          <Link to="/resources/user-manual" className="card cardLink">
-            <div className="cardHeader">
-              <div className="cardIcon">📖</div>
-              <div className="cardH">User Manual</div>
-            </div>
-            <p className="cardP">
-              Complete documentation covering all features, settings, and workflows.
-            </p>
-            <span className="cardLinkArrow">→</span>
-          </Link>
-
-          <Link to="/resources/rfid-tag-guide" className="card cardLink">
-            <div className="cardHeader">
-              <div className="cardIcon">📡</div>
-              <div className="cardH">RFID Tag Guide</div>
-            </div>
-            <p className="cardP">
-              Recommended tags, placement tips, and OpenPrintTag compatibility info.
-            </p>
-            <span className="cardLinkArrow">→</span>
-          </Link>
-
-          <Link to="/resources/troubleshooting" className="card cardLink">
-            <div className="cardHeader">
-              <div className="cardIcon">🔧</div>
-              <div className="cardH">Troubleshooting</div>
-            </div>
-            <p className="cardP">
-              Solutions for common issues and calibration guidance.
-            </p>
-            <span className="cardLinkArrow">→</span>
-          </Link>
-
-          <div className="card cardMuted">
-            <div className="cardHeader">
-              <div className="cardIcon">⬇️</div>
-              <div className="cardH">Firmware Downloads</div>
-            </div>
-            <p className="cardP">
-              Latest firmware releases, changelogs, and update instructions.
-            </p>
-            <span className="cardBadge">Coming soon</span>
-          </div>
-
-          <div className="card cardMuted">
-            <div className="cardHeader">
-              <div className="cardIcon">🔌</div>
-              <div className="cardH">API Documentation</div>
-            </div>
-            <p className="cardP">
-              Technical reference for integrating TrakSpool with other tools and systems.
-            </p>
-            <span className="cardBadge">Coming soon</span>
-          </div>
+      <section className="section" aria-labelledby="user-guides">
+        <div className="sectionHead">
+          <h2 id="user-guides" className="sectionTitle">
+            User guides
+          </h2>
+        </div>
+        <div className="grid grid-4">
+          {Object.entries(DOCS).map(([slug, doc]) => {
+            const Icon = doc.icon;
+            return (
+              <Link key={slug} to={`/resources/${slug}`} className="card linkCard">
+                <span className="iconTile">
+                  <Icon aria-hidden="true" />
+                </span>
+                <h3>{doc.title}</h3>
+                <p>{doc.description}</p>
+                <span className="linkCardFoot">
+                  Read
+                  <ArrowRight aria-hidden="true" />
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <section className="panel section">
-        <h2 className="sectionTitle" style={{ textAlign: 'center' }}>External resources</h2>
+      <section className="section" aria-labelledby="build-docs">
+        <div className="sectionHead">
+          <h2 id="build-docs" className="sectionTitle">
+            Build and develop
+          </h2>
+        </div>
+        <div className="grid grid-4">
+          <Link to="/build" className="card linkCard">
+            <span className="iconTile">
+              <Hammer aria-hidden="true" />
+            </span>
+            <h3>Build it</h3>
+            <p>Make a TrakSpool at home, from printed parts to a working scale.</p>
+            <span className="linkCardFoot">
+              Open
+              <ArrowRight aria-hidden="true" />
+            </span>
+          </Link>
+          <Link to="/flasher" className="card linkCard">
+            <span className="iconTile">
+              <Download aria-hidden="true" />
+            </span>
+            <h3>Firmware updater</h3>
+            <p>Install the latest firmware from your browser, with release notes.</p>
+            <span className="linkCardFoot">
+              Open
+              <ArrowRight aria-hidden="true" />
+            </span>
+          </Link>
+          {PLANNED.map(({ icon, title, text }) => (
+            <div key={title} className="card linkCard linkCard--pending">
+              <span className="iconTile t-neutral">{icon}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+              <span className="badge">Coming soon</span>
+            </div>
+          ))}
+        </div>
+      </section>
 
+      <section className="section" aria-labelledby="elsewhere">
+        <div className="sectionHead">
+          <h2 id="elsewhere" className="sectionTitle">
+            Elsewhere
+          </h2>
+        </div>
         <div className="grid grid-2">
-          <a
-            href="https://openprinttag.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card cardLink"
-          >
-            <div className="cardHeader">
-              <div className="cardIcon">🏷️</div>
-              <div className="cardH">OpenPrintTag Standard</div>
-            </div>
-            <p className="cardP">
-              Learn about the open RFID standard for 3D printing that TrakSpool supports.
-            </p>
-            <span className="cardLinkArrow">→</span>
+          <a href="https://openprinttag.com" target="_blank" rel="noopener noreferrer" className="card linkCard">
+            <span className="iconTile">
+              <Tag aria-hidden="true" />
+            </span>
+            <h3>OpenPrintTag standard</h3>
+            <p>The open NFC tag format for 3D printing filament that TrakSpool reads and writes.</p>
+            <span className="linkCardFoot">
+              openprinttag.com
+              <ExternalLink aria-hidden="true" />
+            </span>
           </a>
-
-          <Link to="/support" className="card cardLink">
-            <div className="cardHeader">
-              <div className="cardIcon">💬</div>
-              <div className="cardH">FAQ & Support</div>
-            </div>
-            <p className="cardP">
-              Find answers to common questions or get in touch with our team.
-            </p>
-            <span className="cardLinkArrow">→</span>
+          <Link to="/support" className="card linkCard">
+            <span className="iconTile">
+              <CircleHelp aria-hidden="true" />
+            </span>
+            <h3>FAQ</h3>
+            <p>Answers to common questions about parts, tags, calibration and privacy.</p>
+            <span className="linkCardFoot">
+              Read
+              <ArrowRight aria-hidden="true" />
+            </span>
           </Link>
         </div>
       </section>

@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <!-- Primary Meta Tags -->
-    <title>TrakSpool — Filament Inventory Management System</title>
-    <meta name="title" content="TrakSpool — Filament Inventory Management System" />
-    <meta name="description" content="Stop guessing how much filament is left. TrakSpool uses RFID tags and precision weighing to identify your spools and track remaining material automatically — no cloud, no subscriptions, no estimates." />
-    <meta name="keywords" content="filament, 3D printing, inventory management, RFID, NFC, spool tracking, OpenPrintTag, filament scale" />
+    <title>TrakSpool — Open-Source Filament Inventory System</title>
+    <meta name="title" content="TrakSpool — Open-Source Filament Inventory System" />
+    <meta name="description" content="TrakSpool is an open-source filament inventory system for 3D printing: a spool scale with an NFC tag reader that identifies every spool and tracks what is left. Open firmware, apps, enclosure and PCB files. No cloud, no subscription." />
+    <meta name="keywords" content="filament, 3D printing, inventory management, RFID, NFC, spool tracking, OpenPrintTag, filament scale, open source, open hardware, ESP32" />
     <meta name="author" content="TrakSpool" />
     <meta name="robots" content="index, follow" />
     
@@ -17,13 +17,14 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#070b14" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171411" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3eee3" />
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://trakspool.com/" />
-    <meta property="og:title" content="TrakSpool — Filament Inventory Management System" />
-    <meta property="og:description" content="Stop guessing how much filament is left. TrakSpool uses RFID tags and precision weighing to identify your spools and track remaining material automatically." />
+    <meta property="og:title" content="TrakSpool — Open-Source Filament Inventory System" />
+    <meta property="og:description" content="An open-source spool scale and NFC tag reader that identifies every spool and tracks what is left. Build your own: open firmware, apps, enclosure and PCB files." />
     <meta property="og:image" content="https://trakspool.com/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -32,13 +33,33 @@
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content="https://trakspool.com/" />
-    <meta name="twitter:title" content="TrakSpool — Filament Inventory Management System" />
-    <meta name="twitter:description" content="Stop guessing how much filament is left. TrakSpool uses RFID tags and precision weighing to identify your spools and track remaining material automatically." />
+    <meta name="twitter:title" content="TrakSpool — Open-Source Filament Inventory System" />
+    <meta name="twitter:description" content="An open-source spool scale and NFC tag reader that identifies every spool and tracks what is left. Build your own: open firmware, apps, enclosure and PCB files." />
     <meta name="twitter:image" content="https://trakspool.com/og-image.png" />
     
-    <!-- Preconnect to Google Fonts for performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- First paint: put the theme class on <html> before the stylesheet renders, the same way
+         src/context/ThemeProvider.jsx does once React has mounted (same storage key and shape
+         as the admin console: localStorage "trakspool-settings" = { theme }). A stored choice
+         wins; with none, follow the system. -->
+    <script>
+      (function () {
+        var theme = null;
+        try {
+          var saved = JSON.parse(localStorage.getItem("trakspool-settings") || "null");
+          if (saved && (saved.theme === "light" || saved.theme === "dark")) theme = saved.theme;
+        } catch (e) {
+          theme = null;
+        }
+        if (!theme) {
+          try {
+            theme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+          } catch (e) {
+            theme = "dark";
+          }
+        }
+        document.documentElement.classList.add(theme + "-mode");
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

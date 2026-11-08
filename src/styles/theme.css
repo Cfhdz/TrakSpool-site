@@ -1,277 +1,204 @@
-/* File: src/styles/theme.css - UPDATED VERSION */
-/* Design tokens: colors, typography, spacing, radii, shadows, sizing */
+/* File: src/styles/theme.css */
+/* Design tokens for the "Workshop" look. This is the only file that defines colours, type,
+   spacing, sizes and layers; every other stylesheet reads them through var().
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   TYPOGRAPHY - Import all available fonts
-   ═══════════════════════════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+   Dark values sit on :root, light values under html.light-mode. The inline script in
+   index.html puts the theme class on <html> before the first paint, so the light values are
+   not repeated under prefers-color-scheme; with JavaScript off the page is dark.
 
-/* Default to Inter - can be overridden dynamically by SettingsContext */
+   Sizes are in rem so the Text size setting (--ui-scale, applied in global.css) scales them.
+   Borders and radii stay in px. The colour values are contrast-checked as a set: change them
+   together or not at all. */
 
 :root {
-  /* ─────────────────────────────────────────────────────────────────────────
-     COLOR SYSTEM (Dark Mode - Default)
-     ───────────────────────────────────────────────────────────────────────── */
-  
-  /* Background gradient stops - seamless top-to-bottom flow */
-  --bg-top: #0a0e1a;
-  --bg-mid: #070b14;
-  --bg-bottom: #04060c;
-  
-  /* Surface colors - for panels, cards, overlays */
-  --surface-1: rgba(255, 255, 255, 0.03);
-  --surface-2: rgba(255, 255, 255, 0.05);
-  --surface-3: rgba(255, 255, 255, 0.07);
-  --surface-hover: rgba(255, 255, 255, 0.09);
-  --surface-active: rgba(255, 255, 255, 0.11);
-  
-  /* Border/stroke colors */
-  --stroke-subtle: rgba(255, 255, 255, 0.06);
-  --stroke-default: rgba(255, 255, 255, 0.10);
-  --stroke-emphasis: rgba(255, 255, 255, 0.16);
-  --stroke-strong: rgba(255, 255, 255, 0.22);
-  
-  /* Text colors */
-  --text-primary: rgba(255, 255, 255, 0.94);
-  --text-secondary: rgba(255, 255, 255, 0.72);
-  --text-tertiary: rgba(255, 255, 255, 0.55);
-  --text-disabled: rgba(255, 255, 255, 0.38);
-  
-  /* Accent palette */
-  --accent-purple: #8b5cf6;
-  --accent-purple-dim: rgba(139, 92, 246, 0.18);
-  --accent-purple-glow: rgba(139, 92, 246, 0.35);
-  
-  --accent-cyan: #22d3ee;
-  --accent-cyan-dim: rgba(34, 211, 238, 0.15);
-  --accent-cyan-glow: rgba(34, 211, 238, 0.30);
-  
-  --accent-lime: #a3e635;
-  --accent-lime-dim: rgba(163, 230, 53, 0.10);
+  /* Surfaces: warm graphite, layered from deepest to top-most */
+  --bg: #171411;               /* page canvas */
+  --sidebar-bg: #131110;       /* navigation rail and bottom tab bar */
+  --surface-sunken: #110f0d;   /* wells: scale readout, table headers */
+  --surface-1: #1f1b17;        /* cards, dialogs, drawers */
+  --surface-2: #28231d;        /* secondary buttons, banners, segmented track */
+  --surface-3: #342d25;        /* hover, neutral chips, progress track */
+  --surface-overlay: #2b251f;  /* menus, listboxes, toasts */
+  --surface-raised: #3c332a;   /* selected segment */
+  --field-bg: #15120f;         /* text inputs */
 
-  /* Brand colors from logo */
-  --brand-copper: #c4956a;
-  --brand-copper-dim: rgba(196, 149, 106, 0.15);
-  --brand-brown: #3d3530;
-  --brand-cream: #f5f0e6;
-  
-  /* Semantic colors */
-  --focus-ring: rgba(34, 211, 238, 0.45);
-  --focus-ring-offset: rgba(34, 211, 238, 0.15);
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     TYPOGRAPHY SCALE
-     ───────────────────────────────────────────────────────────────────────── */
-  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  
-  /* Font size multiplier - controlled by SettingsContext */
-  --font-size-multiplier: 1.0;
-  
-  /* Font sizes - can be dynamically adjusted */
-  --text-xs: 0.875rem;   /* 14px */
-  --text-sm: 1rem;       /* 16px */
-  --text-base: 1.0625rem;/* 17px */
-  --text-md: 1.1875rem;  /* 19px */
-  --text-lg: 1.375rem;   /* 22px */
-  --text-xl: 1.625rem;   /* 26px */
-  --text-2xl: 1.875rem;  /* 30px */
-  --text-3xl: 2.5rem;    /* 40px */
-  --text-4xl: 3.25rem;   /* 52px */
-  --text-5xl: 4.25rem;   /* 68px */
-  
-  /* Font weights */
-  --weight-normal: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-  --weight-bold: 700;
-  --weight-extrabold: 800;
-  
-  /* Line heights */
-  --leading-tight: 1.1;
-  --leading-snug: 1.25;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.65;
-  
-  /* Letter spacing */
-  --tracking-tighter: -0.04em;
-  --tracking-tight: -0.02em;
-  --tracking-normal: -0.01em;
-  --tracking-wide: 0.02em;
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     SPACING SCALE (based on 4px grid)
-     ───────────────────────────────────────────────────────────────────────── */
-  --space-1: 0.25rem;  /* 4px */
-  --space-2: 0.5rem;   /* 8px */
-  --space-3: 0.75rem;  /* 12px */
-  --space-4: 1rem;     /* 16px */
-  --space-5: 1.25rem;  /* 20px */
-  --space-6: 1.5rem;   /* 24px */
-  --space-8: 2rem;     /* 32px */
-  --space-10: 2.5rem;  /* 40px */
-  --space-12: 3rem;    /* 48px */
-  --space-16: 4rem;    /* 64px */
-  --space-20: 5rem;    /* 80px */
-  --space-24: 6rem;    /* 96px */
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     RADII
-     ───────────────────────────────────────────────────────────────────────── */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-2xl: 28px;
-  --radius-full: 9999px;
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     SHADOWS & EFFECTS
-     ───────────────────────────────────────────────────────────────────────── */
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
-  --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.55);
-  --shadow-glow-purple: 0 8px 32px rgba(139, 92, 246, 0.25);
-  --shadow-glow-cyan: 0 8px 32px rgba(34, 211, 238, 0.20);
-  
-  /* Blur values */
-  --blur-sm: 8px;
-  --blur-md: 14px;
-  --blur-lg: 24px;
-  --blur-xl: 40px;
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     LAYOUT
-     ───────────────────────────────────────────────────────────────────────── */
-  --max-width: 1280px;
-  --header-height: 72px;
-  
-  /* ─────────────────────────────────────────────────────────────────────────
-     TRANSITIONS
-     ───────────────────────────────────────────────────────────────────────── */
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --duration-fast: 120ms;
-  --duration-normal: 180ms;
-  --duration-slow: 280ms;
+  /* Lines */
+  --border: #362f27;           /* hairline dividers, card edges */
+  --border-strong: #847464;    /* control outlines: at least 3:1 on every surface */
+
+  /* Text: cream from the logo */
+  --text: #efe8da;
+  --text-muted: #bdb2a0;
+  --text-subtle: #a69c8f;
+  --text-disabled: #8f8577;    /* at least 3:1 on every surface, below --text-subtle */
+
+  /* Accent: copper, lifted for dark surfaces */
+  --accent: #cf9159;
+  --accent-hover: #dba36e;
+  --on-accent: #1c1308;        /* text on an --accent fill */
+  --accent-text: #e0aa76;      /* copper used as text or icon colour */
+  --accent-soft: #38291b;
+
+  /* Status, each with a soft background */
+  --success: #86bd8c;
+  --success-soft: #1d2a20;
+  --warning: #e2b450;
+  --warning-soft: #33290f;
+  --danger: #ea8375;
+  --danger-soft: #3b1f1a;
+  --on-danger: #2b0f0b;        /* text on a --danger fill */
+  --info: #93b4cc;
+  --info-soft: #1c2730;
+
+  /* Other colour */
+  --meter: #9a8f80;                          /* neutral progress fill */
+  --scrim: rgba(8, 6, 4, 0.72);              /* dialog and drawer backdrop */
+  --swatch-edge: rgba(239, 232, 218, 0.46);  /* keeps a black swatch visible on dark surfaces */
+  --focus: #f0bd8c;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 6px 16px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-3: 0 20px 48px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
+
+  /* Brand artwork (logo, spool badge, swatch defaults): the same in both themes */
+  --art-ink: #342818;
+  --art-cream: #ded5c0;
+  --art-copper: #b58254;
+  --art-steel: #6c665a;
+  --art-hub: #d4cab5;
+  --art-core: #8a6946;
+  --art-groove: rgba(0, 0, 0, 0.13);
+  --art-clear-a: #f4f7f7;
+  --art-clear-b: #cbd6d8;
+
+  /* Type. Only fonts that ship with operating systems: the device has no internet.
+     SettingsContext overrides --font-sans inline on <html> for the Font Family setting. */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  --fs-2xs: 0.6875rem;  /* 11px: eyebrow labels */
+  --fs-xs: 0.75rem;     /* 12px */
+  --fs-sm: 0.8125rem;   /* 13px */
+  --fs-md: 0.875rem;    /* 14px: body */
+  --fs-lg: 1rem;        /* 16px */
+  --fs-xl: 1.25rem;     /* 20px */
+  --fs-2xl: 1.5rem;     /* 24px */
+  --fs-display: clamp(2.5rem, 9vw, 3.5rem);
+  --lh: 1.45;
+  --lh-tight: 1.2;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 600;
+
+  /* Spacing (4px base) */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --gutter: 1.5rem;
+
+  /* Sizes */
+  --control-h: 2.25rem;
+  --control-h-sm: 1.75rem;
+  --sidebar-w: 14.5rem;
+  --rail-w: 4rem;
+  --topbar-h: 3.5rem;
+  --tabbar-h: 3.75rem;
+  --content-max: 80rem;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 8px;
+  --r-lg: 10px;
+  --r-full: 999px;
+
+  /* Layers. Navigation stays below the overlay scrim. */
+  --z-sticky: 5;       /* sticky table heads */
+  --z-fab: 40;         /* scroll-to-top */
+  --z-nav: 50;         /* sidebar, top bar, tab bar */
+  --z-overlay: 55;     /* drawer and dialog scrim */
+  --z-panel: 60;       /* drawer, import dialog */
+  --z-toast: 70;
+  --z-dropdown: 100;   /* combo lists */
+  --z-modal: 1000;     /* Tag Spool, Add Unopened and Settings dialogs, colour picker */
+
+  /* Motion */
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.3, 1);
 }
 
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
+html.light-mode {
+  /* Surfaces: paper and cream */
+  --bg: #f3eee3;
+  --sidebar-bg: #ebe5d7;
+  --surface-sunken: #ece6d8;
+  --surface-1: #fbf8f1;
+  --surface-2: #f1ebde;
+  --surface-3: #e6dece;
+  --surface-overlay: #fffdf8;
+  --surface-raised: #fffdf8;
+  --field-bg: #fffdf8;
+
+  /* Lines */
+  --border: #dcd2bf;
+  --border-strong: #897c67;
+
+  /* Text: espresso ink */
+  --text: #2a2015;
+  --text-muted: #5a5041;
+  --text-subtle: #6b6050;
+  --text-disabled: #7a6e5c;
+
+  /* Accent: copper, deepened for paper */
+  --accent: #8a5526;
+  --accent-hover: #74461d;
+  --on-accent: #fffaf2;
+  --accent-text: #84501f;
+  --accent-soft: #f0dfca;
+
+  /* Status */
+  --success: #2c6638;
+  --success-soft: #dfeadb;
+  --warning: #7d5400;
+  --warning-soft: #f5e6bf;
+  --danger: #a3362a;
+  --danger-soft: #f6dcd5;
+  --on-danger: #fffaf2;
+  --info: #2f5a7a;
+  --info-soft: #dde7ee;
+
+  /* Other colour */
+  --meter: #867a68;
+  --scrim: rgba(42, 32, 21, 0.5);
+  --swatch-edge: rgba(42, 32, 21, 0.56);     /* keeps a white swatch visible on paper surfaces */
+  --focus: #8a5526;
+  --shadow-1: 0 1px 2px rgba(52, 40, 24, 0.08);
+  --shadow-2: 0 6px 16px rgba(52, 40, 24, 0.14), 0 1px 2px rgba(52, 40, 24, 0.1);
+  --shadow-3: 0 20px 48px rgba(52, 40, 24, 0.24), 0 2px 6px rgba(52, 40, 24, 0.12);
+}
+
+/* Touch sizing: phones by width, plus any coarse-pointer device (tablets, phones in landscape) */
+@media (max-width: 720px), (pointer: coarse) {
   :root {
-    --duration-fast: 0ms;
-    --duration-normal: 0ms;
-    --duration-slow: 0ms;
+    --control-h: max(2.75rem, 44px);
+    --control-h-sm: max(2.5rem, 40px);
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   LIGHT MODE OVERRIDES
-   Warm, professional light theme inspired by the logo's cream/copper palette
-   ═══════════════════════════════════════════════════════════════════════════ */
-.light-mode {
-  /* Background - warm cream tones inspired by logo */
-  --bg-top: #faf8f5;
-  --bg-mid: #f5f2ed;
-  --bg-bottom: #ebe6de;
-  
-  /* Surface colors - clean whites with warmth */
-  --surface-1: rgba(255, 255, 255, 0.7);
-  --surface-2: rgba(255, 255, 255, 0.85);
-  --surface-3: rgba(255, 255, 255, 0.95);
-  --surface-hover: rgba(255, 255, 255, 1);
-  --surface-active: rgba(255, 255, 255, 1);
-  
-  /* Border/stroke colors - warm grays */
-  --stroke-subtle: rgba(61, 53, 48, 0.08);
-  --stroke-default: rgba(61, 53, 48, 0.15);
-  --stroke-emphasis: rgba(61, 53, 48, 0.22);
-  --stroke-strong: rgba(61, 53, 48, 0.35);
-  
-  /* Text colors - warm dark tones for readability */
-  --text-primary: #1a1614;
-  --text-secondary: #3d3530;
-  --text-tertiary: #5c534c;
-  --text-disabled: #8c8279;
-  
-  /* Accent colors - warmer, more saturated for light bg */
-  --accent-purple: #7c3aed;
-  --accent-purple-dim: rgba(124, 58, 237, 0.12);
-  --accent-purple-glow: rgba(124, 58, 237, 0.20);
-  
-  --accent-cyan: #0891b2;
-  --accent-cyan-dim: rgba(8, 145, 178, 0.10);
-  --accent-cyan-glow: rgba(8, 145, 178, 0.18);
-  
-  --accent-lime: #65a30d;
-  --accent-lime-dim: rgba(101, 163, 13, 0.08);
-  
-  /* Brand copper accent for light mode */
-  --brand-copper: #b8875a;
-  --brand-copper-dim: rgba(184, 135, 90, 0.12);
-  
-  /* Focus ring */
-  --focus-ring: rgba(124, 58, 237, 0.50);
-  --focus-ring-offset: rgba(124, 58, 237, 0.18);
-  
-  /* Shadows - softer, warmer */
-  --shadow-sm: 
-    0 1px 2px rgba(61, 53, 48, 0.06),
-    0 2px 8px rgba(61, 53, 48, 0.08);
-  --shadow-md: 
-    0 2px 4px rgba(61, 53, 48, 0.06),
-    0 6px 20px rgba(61, 53, 48, 0.10);
-  --shadow-lg: 
-    0 4px 8px rgba(61, 53, 48, 0.06),
-    0 12px 36px rgba(61, 53, 48, 0.12);
-  --shadow-xl: 
-    0 8px 16px rgba(61, 53, 48, 0.06),
-    0 20px 48px rgba(61, 53, 48, 0.14);
-  --shadow-glow-purple: 0 4px 24px rgba(124, 58, 237, 0.15);
-  --shadow-glow-cyan: 0 4px 24px rgba(8, 145, 178, 0.12);
+@media (max-width: 720px) {
+  :root {
+    --gutter: 1rem;
+    --topbar-h: 3.25rem;
+  }
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   SYSTEM PREFERENCE: LIGHT MODE
-   Auto-apply light mode when system prefers it (unless manually set to dark)
-   ═══════════════════════════════════════════════════════════════════════════ */
-@media (prefers-color-scheme: light) {
-  :root:not(.dark-mode) {
-    /* Apply same light mode styles as above */
-    --bg-top: #faf8f5;
-    --bg-mid: #f5f2ed;
-    --bg-bottom: #ebe6de;
-    --surface-1: rgba(255, 255, 255, 0.7);
-    --surface-2: rgba(255, 255, 255, 0.85);
-    --surface-3: rgba(255, 255, 255, 0.95);
-    --surface-hover: rgba(255, 255, 255, 1);
-    --surface-active: rgba(255, 255, 255, 1);
-    --stroke-subtle: rgba(61, 53, 48, 0.08);
-    --stroke-default: rgba(61, 53, 48, 0.15);
-    --stroke-emphasis: rgba(61, 53, 48, 0.22);
-    --stroke-strong: rgba(61, 53, 48, 0.35);
-    --text-primary: #1a1614;
-    --text-secondary: #3d3530;
-    --text-tertiary: #5c534c;
-    --text-disabled: #8c8279;
-    --accent-purple: #7c3aed;
-    --accent-purple-dim: rgba(124, 58, 237, 0.12);
-    --accent-purple-glow: rgba(124, 58, 237, 0.20);
-    --accent-cyan: #0891b2;
-    --accent-cyan-dim: rgba(8, 145, 178, 0.10);
-    --accent-cyan-glow: rgba(8, 145, 178, 0.18);
-    --accent-lime: #65a30d;
-    --accent-lime-dim: rgba(101, 163, 13, 0.08);
-    --brand-copper: #b8875a;
-    --brand-copper-dim: rgba(184, 135, 90, 0.12);
-    --focus-ring: rgba(124, 58, 237, 0.50);
-    --focus-ring-offset: rgba(124, 58, 237, 0.18);
-    --shadow-sm: 0 1px 2px rgba(61, 53, 48, 0.06), 0 2px 8px rgba(61, 53, 48, 0.08);
-    --shadow-md: 0 2px 4px rgba(61, 53, 48, 0.06), 0 6px 20px rgba(61, 53, 48, 0.10);
-    --shadow-lg: 0 4px 8px rgba(61, 53, 48, 0.06), 0 12px 36px rgba(61, 53, 48, 0.12);
-    --shadow-xl: 0 8px 16px rgba(61, 53, 48, 0.06), 0 20px 48px rgba(61, 53, 48, 0.14);
-    --shadow-glow-purple: 0 4px 24px rgba(124, 58, 237, 0.15);
-    --shadow-glow-cyan: 0 4px 24px rgba(8, 145, 178, 0.12);
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
   }
 }

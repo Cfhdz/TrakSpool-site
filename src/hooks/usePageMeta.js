@@ -6,14 +6,14 @@ import { useEffect } from "react";
 
 const BASE_TITLE = "TrakSpool";
 const DEFAULT_DESCRIPTION =
-  "Stop guessing how much filament is left. TrakSpool uses RFID tags and precision weighing to identify your spools and track remaining material automatically — no cloud, no subscriptions, no estimates.";
+  "TrakSpool is an open-source filament inventory system for 3D printing: a spool scale with an NFC tag reader that identifies every spool and tracks what is left. Open firmware, apps, enclosure and PCB files. No cloud, no subscription.";
 
 export default function usePageMeta({ title, description } = {}) {
   useEffect(() => {
     // Set document title
     document.title = title
       ? `${title} — ${BASE_TITLE}`
-      : `${BASE_TITLE} — Filament Inventory Management System`;
+      : `${BASE_TITLE} — Open-Source Filament Inventory System`;
 
     // Set meta description
     const desc = description || DEFAULT_DESCRIPTION;

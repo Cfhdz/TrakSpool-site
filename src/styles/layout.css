@@ -1,502 +1,285 @@
 /* File: src/styles/layout.css */
-/* Header, navigation, footer layout + responsive behavior */
+/* Site shell: sticky top bar with the primary navigation, the phone menu sheet, the page column
+   and the footer. It reuses the admin console's shell look (top bar on --bg with a hairline,
+   nav rows with the copper "active" state, sheet on --surface-1, --sidebar-bg for the footer);
+   the console's sidebar becomes a top bar here because a public page needs the full width.
+   The document is the scroller. */
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   HEADER
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ── Top bar ───────────────────────────────────────────────────────────────── */
 .header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  backdrop-filter: blur(var(--blur-md)) saturate(1.2);
-  -webkit-backdrop-filter: blur(var(--blur-md)) saturate(1.2);
-  background: rgba(7, 11, 20, 0.75);
-  border-bottom: 1px solid var(--stroke-subtle);
-  transition: 
-    background var(--duration-normal) var(--ease-out),
-    border-color var(--duration-normal) var(--ease-out);
-}
-
-/* Light mode header */
-.light-mode .header {
-  background: rgba(250, 248, 245, 0.88);
-  border-bottom-color: var(--stroke-default);
-}
-
-@media (prefers-color-scheme: light) {
-  :root:not(.dark-mode) .header {
-    background: rgba(250, 248, 245, 0.88);
-    border-bottom-color: var(--stroke-default);
-  }
-}
-
-/* Subtle glow line under header */
-.header::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--accent-cyan-dim) 30%,
-    var(--accent-purple-dim) 70%,
-    transparent 100%
-  );
-  opacity: 0.6;
+  z-index: var(--z-nav);
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
 }
 
 .headerInner {
-  max-width: var(--max-width);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  max-width: var(--content-max);
+  height: var(--topbar-h);
   margin: 0 auto;
-  padding: var(--space-2) var(--space-5);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-6);
-  min-height: auto;
+  padding: 0 var(--gutter);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   BRAND / LOGO
-   ═══════════════════════════════════════════════════════════════════════════ */
 .brandLink {
-  text-decoration: none;
-  flex-shrink: 0;
-}
-
-.brandLink:focus-visible {
-  outline-offset: 4px;
-}
-
-.brand {
   display: flex;
+  flex: none;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--sp-3);
+  height: 2.5rem;
+  margin-left: calc(var(--sp-2) * -1);
+  padding: 0 var(--sp-2);
+  border-radius: var(--r-sm);
+  color: var(--text);
 }
 
-/* LOGO - Larger and more prominent */
+.brandLink:hover {
+  background: var(--surface-2);
+  text-decoration: none;
+}
+
 .logoImg {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-md);
-  object-fit: cover;
-  border: 1px solid var(--stroke-default);
-  box-shadow: 
-    var(--shadow-md),
-    var(--shadow-glow-purple);
-  transition: 
-    transform var(--duration-normal) var(--ease-out),
-    box-shadow var(--duration-normal) var(--ease-out);
-}
-
-.brandLink:hover .logoImg {
-  transform: scale(1.05);
-  box-shadow: 
-    var(--shadow-lg),
-    0 8px 40px rgba(139, 92, 246, 0.35);
-}
-
-.brandText {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2px;
+  display: block;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
 }
 
 .brandTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: var(--tracking-tighter);
-  line-height: 1;
-  color: var(--text-primary);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
-.brandSub {
-  font-size: var(--text-xs);
-  font-weight: var(--weight-medium);
-  color: var(--text-tertiary);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   NAVIGATION
-   ═══════════════════════════════════════════════════════════════════════════ */
-.nav {
+.primaryNav {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--sp-1);
+  min-width: 0;
+  margin-left: auto;
 }
 
-.nav a {
-  position: relative;
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: var(--weight-medium);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
-  border: 1px solid transparent;
-  transition: 
-    color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
-}
-
-.nav a:hover {
-  color: var(--text-primary);
-  background: var(--surface-2);
-}
-
-.nav a.active {
-  color: var(--text-primary);
-  background: var(--surface-3);
-  border-color: var(--stroke-default);
-}
-
-/* Active indicator dot */
-.nav a.active::after {
-  content: '';
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: var(--radius-full);
-  background: var(--accent-cyan);
-  box-shadow: 0 0 8px var(--accent-cyan);
-}
-
-/* Focus state for nav links */
-.nav a:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-/* Desktop nav - visible on larger screens */
-.navDesktop {
-  flex: 1;
-  justify-content: flex-end;
-  flex-wrap: nowrap;
-  gap: var(--space-2);
-}
-
-/* Mobile header actions (theme toggle + hamburger) - hidden on desktop */
-.mobileHeaderActions {
-  display: none;
+.headerActions {
+  display: flex;
+  flex: none;
   align-items: center;
-  gap: var(--space-2);
+  gap: var(--sp-1);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   HAMBURGER BUTTON
-   ═══════════════════════════════════════════════════════════════════════════ */
-.hamburger {
+/* Navigation row: the top bar links and the rows of the phone menu */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-height: var(--control-h);
+  padding: 0 var(--sp-3);
+  border-radius: var(--r-sm);
+  color: var(--text-muted);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  transition:
+    background var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease);
+}
+
+.navItem svg {
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.navItem:hover {
+  background: var(--surface-2);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.navItem.active {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.navItem.active svg {
+  color: var(--accent-text);
+}
+
+/* in the top bar the copper mark sits under the label; in the sheet it is on the left edge */
+.primaryNav .navItem.active {
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+.menuSheet .navItem.active {
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+/* GitHub link and menu button: quiet icon buttons beside the theme toggle */
+.menuButton {
+  display: none;
+}
+
+/* ── Phone menu: a sheet under the top bar ─────────────────────────────────── */
+.menuScrim {
+  position: fixed;
+  inset: var(--topbar-h) 0 0;
+  z-index: var(--z-overlay);
+  background: var(--scrim);
+}
+
+.menuSheet {
+  position: fixed;
+  top: var(--topbar-h);
+  right: 0;
+  left: 0;
+  z-index: var(--z-panel);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-
-  border-radius: var(--radius-md);
-  border: 1px solid var(--stroke-default);
-  background: var(--surface-2);
-  color: var(--text-secondary);
-  cursor: pointer;
-
-  transition:
-    background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
+  gap: var(--sp-1);
+  max-height: calc(100dvh - var(--topbar-h));
+  padding: var(--sp-3) var(--gutter) var(--sp-4);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-3);
 }
 
-.hamburger:hover {
-  background: var(--surface-hover);
-  border-color: var(--stroke-emphasis);
+.menuSheet .navItem {
+  flex: none;
+  min-height: max(2.75rem, 44px);
 }
 
-.hamburger:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.hamburgerBar {
-  display: block;
-  width: 18px;
-  height: 2px;
-  background: var(--text-secondary);
-  border-radius: 1px;
-  transition:
-    transform var(--duration-fast) var(--ease-out),
-    opacity var(--duration-fast) var(--ease-out);
-}
-
-.hamburgerBar--open:nth-child(1) {
-  transform: translateY(7px) rotate(45deg);
-}
-
-.hamburgerBar--open:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburgerBar--open:nth-child(3) {
-  transform: translateY(-7px) rotate(-45deg);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   MOBILE NAV DROPDOWN
-   ═══════════════════════════════════════════════════════════════════════════ */
-.mobileNav {
-  display: none;
+/* ── Page column ───────────────────────────────────────────────────────────── */
+.page {
+  display: flex;
   flex-direction: column;
-  padding: var(--space-3) var(--space-5);
-  border-top: 1px solid var(--stroke-subtle);
+  gap: var(--sp-12);
+  width: 100%;
+  max-width: var(--content-max);
+  min-width: 0;
+  margin: 0 auto;
+  padding: var(--sp-8) var(--gutter) 0;
 }
 
-.mobileNav a {
-  display: block;
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  font-weight: var(--weight-medium);
-  padding: var(--space-3) var(--space-3);
-  border-radius: var(--radius-md);
-  color: var(--text-secondary);
-  transition:
-    color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out);
-}
-
-.mobileNav a:hover {
-  color: var(--text-primary);
-  background: var(--surface-2);
-}
-
-.mobileNav a.active {
-  color: var(--text-primary);
-  background: var(--surface-3);
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   FOOTER
-   ═══════════════════════════════════════════════════════════════════════════ */
+/* ── Footer ────────────────────────────────────────────────────────────────── */
 .footer {
-  margin-top: var(--space-12);
-  padding: var(--space-8) var(--space-6);
-  
-  /* Rounded corners all around */
-  border-radius: var(--radius-2xl);
-  
-  /* Soft border all around */
-  border: 1px solid var(--stroke-subtle);
-  
-  /* Subtle gradient background */
-  background: 
-    linear-gradient(
-      180deg,
-      var(--surface-2) 0%,
-      var(--surface-1) 100%
-    );
-  
-  /* Soft shadow for depth */
-  box-shadow: var(--shadow-sm);
+  margin-top: var(--sp-12);
+  background: var(--sidebar-bg);
+  border-top: 1px solid var(--border);
 }
 
 .footerInner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-}
-
-.footerTop {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: var(--space-6);
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  gap: var(--sp-8) var(--sp-6);
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: var(--sp-10) var(--gutter) var(--sp-6);
 }
 
 .footerBrand {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-extrabold);
-  letter-spacing: var(--tracking-tighter);
-  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+}
+
+.footerBrand .brandLink {
+  margin-left: calc(var(--sp-2) * -1);
+}
+
+.footerTagline {
+  max-width: 22rem;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.footerCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
 }
 
 .footerLinks {
   display: flex;
-  gap: var(--space-2);
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: var(--sp-1);
 }
 
-.footerLinks a {
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
-  color: var(--text-tertiary);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
-  transition: 
-    color var(--duration-fast) var(--ease-out),
-    background var(--duration-fast) var(--ease-out),
-    border-color var(--duration-fast) var(--ease-out);
+.footerLinks a,
+.footerLinks .footerPending {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 1.75rem;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
 }
 
 .footerLinks a:hover {
-  color: var(--text-primary);
-  background: var(--surface-2);
-  border-color: var(--stroke-subtle);
+  color: var(--text);
 }
 
-.footerLinks a:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
+.footerPending {
+  color: var(--text-subtle);
 }
 
 .footerBottom {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
-  gap: var(--space-4);
-
-  font-size: var(--text-xs);
-  color: var(--text-disabled);
-  padding-top: var(--space-4);
-  border-top: 1px solid var(--stroke-subtle);
+  gap: var(--sp-2) var(--sp-4);
+  grid-column: 1 / -1;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
 }
 
-.footerLegal {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-}
-
-.footerLegal a {
-  color: var(--text-disabled);
-  text-decoration: none;
-}
-
-.footerLegal a:hover {
-  color: var(--text-primary);
-  text-decoration: underline;
-}
-
-.footerSeparator {
-  opacity: 0.6;
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   RESPONSIVE ADJUSTMENTS
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Tablet - switch to hamburger */
-@media (max-width: 900px) {
-  .headerInner {
-    padding: var(--space-2) var(--space-4);
-    gap: var(--space-4);
+/* ── Tablet: tighter top bar links ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .primaryNav .navItem {
+    padding: 0 var(--sp-2);
   }
+}
 
-  .logoImg {
-    width: 54px;
-    height: 54px;
-  }
-
-  .brandTitle {
-    font-size: var(--text-xl);
-  }
-
-  /* Hide desktop nav, show hamburger */
-  .navDesktop {
+/* ── Phone: the links move into the menu sheet ─────────────────────────────── */
+@media (max-width: 720px) {
+  .primaryNav {
     display: none;
   }
 
-  .mobileHeaderActions {
-    display: flex;
+  .headerActions {
+    margin-left: auto;
   }
 
-  .mobileNav {
-    display: flex;
+  .menuButton {
+    display: inline-flex;
   }
 
-  .footer {
-    padding: var(--space-6) var(--space-5);
-    border-radius: var(--radius-xl);
+  .page {
+    gap: var(--sp-10);
+    padding-top: var(--sp-6);
+  }
+
+  .footerInner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding-top: var(--sp-8);
   }
 
   .footerBrand {
-    font-size: var(--text-xl);
+    grid-column: 1 / -1;
   }
 }
 
-/* Mobile */
-@media (max-width: 640px) {
-  .headerInner {
-    padding: var(--space-2) var(--space-4);
-    gap: var(--space-3);
-  }
-
-  .logoImg {
-    width: 48px;
-    height: 48px;
-  }
-
-  .brand {
-    gap: var(--space-3);
-  }
-
-  .brandTitle {
-    font-size: var(--text-lg);
-  }
-
-  .brandSub {
+@media (min-width: 721px) {
+  .menuScrim,
+  .menuSheet {
     display: none;
-  }
-
-  .footer {
-    padding: var(--space-5) var(--space-4);
-    border-radius: var(--radius-lg);
-  }
-
-  .footerBrand {
-    font-size: var(--text-lg);
-  }
-
-  .footerTop {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-4);
-  }
-
-  .footerLinks {
-    width: 100%;
-  }
-
-  .footerBottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
-  }
-
-  .footerLegal {
-    opacity: 0.85;
-  }
-}
-
-/* Extra small screens */
-@media (max-width: 400px) {
-  .brandTitle {
-    font-size: var(--text-base);
-  }
-
-  .logoImg {
-    width: 42px;
-    height: 42px;
   }
 }

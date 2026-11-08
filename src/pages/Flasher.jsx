@@ -1,7 +1,9 @@
 // File: src/pages/Flasher.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Usb } from "lucide-react";
 import usePageMeta from "../hooks/usePageMeta.js";
+import Steps from "../components/Steps.jsx";
 import "./Flasher.css";
 import flasherManifest from "../../public/flasher/manifest.json";
 
@@ -11,73 +13,100 @@ const FIRMWARE_VERSION = flasherManifest.version;
 const FIRMWARE_RELEASED = flasherManifest.released;
 const FIRMWARE_CHANGES = flasherManifest.changes ?? [];
 
-function StepCard({ number, title, description }) {
-  return (
-    <div className="flasher-step card card--centered">
-      <div className="flasher-stepNumber">{number}</div>
-      <div className="cardH">{title}</div>
-      <p className="cardP">{description}</p>
-    </div>
-  );
-}
+const INSTALL_TAG = "esp-web-install-button";
+const INSTALL_SCRIPT = "https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module";
+
+const STEPS = [
+  { title: "Connect", text: "Plug your TrakSpool into this computer with a USB-C cable." },
+  { title: "Update", text: "Click Update Firmware and pick your device from the list." },
+  { title: "Wait", text: "The update takes about 30 seconds. Don't unplug the device while it runs." },
+  { title: "Done", text: "TrakSpool restarts by itself with the new firmware." },
+];
+
+const TROUBLESHOOTING = [
+  {
+    q: "Device not showing up in the list?",
+    a: "Put the board into bootloader mode by quickly double-pressing the reset button on the device. The RGB LED pulses green when it is ready. Then click Update Firmware again.",
+  },
+  {
+    q: "Update failed or device won't boot?",
+    a: "Don't worry: TrakSpool has a built-in safe mode. If the firmware fails to boot three times, it enters recovery mode by itself. Double-press the reset button to enter bootloader mode and try the update again.",
+  },
+  {
+    q: "I'm not using Chrome or Edge",
+    a: "The browser updater needs the Web Serial API, which only Chrome and Edge on desktop have; Firefox and Safari do not. Without them, you can build the firmware from source and upload it with PlatformIO (see the Files page), or contact us for help.",
+  },
+  {
+    q: "Do I need to update the filesystem too?",
+    a: "Most updates only need a firmware update, which is what this tool does. If a release needs a filesystem update, its release notes say so and include separate instructions.",
+  },
+];
 
 export default function Flasher() {
-  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptLoaded, setScriptLoaded] = useState(() => Boolean(window.customElements?.get(INSTALL_TAG)));
 
   usePageMeta({
     title: "Firmware Updater",
     description:
-      "Update your TrakSpool firmware directly from your browser. No software to install — just plug in USB and click update.",
+      "Update your TrakSpool firmware directly from your browser. No software to install: plug in USB and click update.",
   });
 
-  // Load ESP Web Tools script
+  // Load ESP Web Tools once; the page is ready when its custom element is defined.
   useEffect(() => {
-    const existing = document.querySelector(
-      'script[src*="esp-web-tools"]'
-    );
-    if (existing) {
-      setScriptLoaded(true);
-      return;
+    let cancelled = false;
+    if (!document.querySelector('script[src*="esp-web-tools"]')) {
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = INSTALL_SCRIPT;
+      document.head.appendChild(script);
     }
-
-    const script = document.createElement("script");
-    script.type = "module";
-    script.src =
-      "https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module";
-    script.onload = () => setScriptLoaded(true);
-    document.head.appendChild(script);
-
+    window.customElements.whenDefined(INSTALL_TAG).then(() => {
+      if (!cancelled) setScriptLoaded(true);
+    });
     return () => {
-      // Script stays loaded — no cleanup needed
+      cancelled = true;
     };
   }, []);
 
   return (
     <>
-      {/* Hero */}
-      <section className="panel section sectionCentered">
-        <div className="flasher-badge">
-          <span className="flasher-badgeDot" />
-          Beta Program
-        </div>
-        <h1 className="pageTitle">Firmware Updater</h1>
-        <p style={{ color: "var(--text-secondary)", maxWidth: "540px", margin: "0 auto" }}>
-          Update your TrakSpool directly from your browser.
-          No software to install — just connect USB and click.
+      <header className="pageHead">
+        <p className="eyebrow">Firmware updater</p>
+        <h1 className="pageTitle">Update your TrakSpool</h1>
+        <p className="lead">
+          Install the latest firmware from your browser. Nothing to install: connect USB and click.
         </p>
-      </section>
+      </header>
 
-      {/* Current version */}
-      <section className="panel section sectionCentered">
-        <div className="flasher-versionCard">
-          <div className="flasher-versionLabel">Latest Firmware</div>
-          <div className="flasher-versionNumber">v{FIRMWARE_VERSION}</div>
-          <div className="flasher-versionDate">Updated {FIRMWARE_RELEASED}</div>
+      <section className="release" aria-label="Latest firmware">
+        <div className="panel installCard">
+          <p className="eyebrow">Latest firmware</p>
+          <div className="versionNumber">v{FIRMWARE_VERSION}</div>
+          <div className="versionDate">Released {FIRMWARE_RELEASED}</div>
+          <esp-web-install-button manifest="/flasher/manifest.json">
+            <button slot="activate" className="btn btn--lg" type="button">
+              <Usb aria-hidden="true" />
+              Update Firmware
+            </button>
+          </esp-web-install-button>
+          {!scriptLoaded && <p className="installHint">Loading the updater…</p>}
+          <p className="installHint">
+            Needs{" "}
+            <a href="https://www.google.com/chrome/" target="_blank" rel="noopener noreferrer">
+              Chrome
+            </a>{" "}
+            or{" "}
+            <a href="https://www.microsoft.com/edge" target="_blank" rel="noopener noreferrer">
+              Edge
+            </a>{" "}
+            on a desktop computer.
+          </p>
         </div>
+
         {FIRMWARE_CHANGES.length > 0 && (
-          <div className="flasher-changes">
-            <div className="flasher-changesTitle">What&apos;s new in v{FIRMWARE_VERSION}</div>
-            <ul className="flasher-changesList">
+          <div className="card releaseNotes">
+            <h2 className="eyebrow">What&apos;s new in v{FIRMWARE_VERSION}</h2>
+            <ul className="bulletList">
               {FIRMWARE_CHANGES.map((change) => (
                 <li key={change}>{change}</li>
               ))}
@@ -86,155 +115,44 @@ export default function Flasher() {
         )}
       </section>
 
-      {/* Steps */}
-      <section className="panel section">
-        <h2 className="sectionTitle" style={{ textAlign: "center" }}>
-          How It Works
-        </h2>
-        <div className="grid grid-2">
-          <StepCard
-            number="1"
-            title="Connect"
-            description="Plug your TrakSpool into this computer using a USB-C cable."
-          />
-          <StepCard
-            number="2"
-            title="Update"
-            description="Click the Update Firmware button below and select your device from the list."
-          />
-          <StepCard
-            number="3"
-            title="Wait"
-            description="The update takes about 30 seconds. Don't disconnect the device during this time."
-          />
-          <StepCard
-            number="4"
-            title="Done"
-            description="Your TrakSpool will restart automatically with the latest firmware."
-          />
+      <section className="section" aria-labelledby="flasher-how">
+        <div className="sectionHead">
+          <h2 id="flasher-how" className="sectionTitle">
+            How it works
+          </h2>
+        </div>
+        <Steps steps={STEPS} />
+      </section>
+
+      <section className="section" aria-labelledby="flasher-help">
+        <div className="sectionHead">
+          <h2 id="flasher-help" className="sectionTitle">
+            Troubleshooting
+          </h2>
+        </div>
+        <div className="faqList">
+          {TROUBLESHOOTING.map(({ q, a }) => (
+            <details key={q} className="faqItem">
+              <summary className="faqQuestion">{q}</summary>
+              <div className="faqAnswer">{a}</div>
+            </details>
+          ))}
         </div>
       </section>
 
-      {/* Flash button */}
-      <section className="panel section sectionCentered">
-        <div className="flasher-installArea">
-          {/* eslint-disable-next-line react/no-unknown-property */}
-          <esp-web-install-button manifest="/flasher/manifest.json">
-            <button
-              slot="activate"
-              className="btn btn--primary btn--lg flasher-installBtn"
-            >
-              Update Firmware
-            </button>
-          </esp-web-install-button>
-
-          {!scriptLoaded && (
-            <p className="flasher-hint">Loading updater…</p>
-          )}
-
-          <p className="flasher-hint">
-            Requires{" "}
-            <a
-              href="https://www.google.com/chrome/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Chrome
-            </a>{" "}
-            or{" "}
-            <a
-              href="https://www.microsoft.com/edge"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Edge
-            </a>{" "}
-            on a desktop computer.
-          </p>
+      <section className="panel ctaBand" aria-labelledby="flasher-cta">
+        <div className="sectionHead">
+          <h2 id="flasher-cta" className="sectionTitle">
+            Need help?
+          </h2>
+          <p className="sectionText">Having trouble with the update? We are happy to help.</p>
         </div>
-      </section>
-
-      {/* Troubleshooting */}
-      <section className="panel section">
-        <h2 className="sectionTitle" style={{ textAlign: "center" }}>
-          Troubleshooting
-        </h2>
-        <div className="flasher-troubleshooting">
-          <details className="faqItem">
-            <summary className="faqQuestion">
-              Device not showing up in the list?
-            </summary>
-            <div className="faqAnswer">
-              Try putting the board into bootloader mode by quickly
-              double-pressing the reset button on the device. The RGB LED
-              will pulse green when it's ready. Then click Update Firmware
-              again.
-            </div>
-          </details>
-
-          <details className="faqItem">
-            <summary className="faqQuestion">
-              Update failed or device won't boot?
-            </summary>
-            <div className="faqAnswer">
-              Don't worry — TrakSpool has a built-in safe mode. If the
-              firmware fails to boot three times, it will automatically
-              enter recovery mode. Double-press the reset button to enter
-              bootloader mode and try the update again.
-            </div>
-          </details>
-
-          <details className="faqItem">
-            <summary className="faqQuestion">
-              I'm not using Chrome or Edge
-            </summary>
-            <div className="faqAnswer">
-              The browser-based updater requires the Web Serial API, which
-              is only available in Chrome and Edge on desktop. Firefox and
-              Safari do not support it. If you can't use Chrome or Edge,
-              contact us for an alternative update method.
-            </div>
-          </details>
-
-          <details className="faqItem">
-            <summary className="faqQuestion">
-              Do I need to update the filesystem too?
-            </summary>
-            <div className="faqAnswer">
-              Most updates only require a firmware update, which is what
-              this tool does. If a specific update requires a filesystem
-              update, we'll provide separate instructions alongside the
-              release notes.
-            </div>
-          </details>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="panel section sectionCentered">
-        <h2 className="sectionTitle">Need Help?</h2>
-        <p
-          style={{
-            color: "var(--text-secondary)",
-            marginBottom: "var(--space-5)",
-          }}
-        >
-          Having trouble with the update? We're happy to help.
-        </p>
         <div className="ctaRow">
-          <Link
-            className="btn btn--primary btn--lg"
-            to="/support"
-            style={{ minWidth: "180px" }}
-          >
-            View FAQ
+          <Link className="btn btn--lg" to="/support">
+            Read the FAQ
           </Link>
-          <Link
-            className="btn btn--ghost btn--lg"
-            to="/contact"
-            style={{ minWidth: "180px" }}
-          >
-            Contact Us
+          <Link className="btn btn--ghost btn--lg" to="/contact">
+            Contact
           </Link>
         </div>
       </section>

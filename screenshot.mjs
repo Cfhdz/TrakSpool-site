@@ -12,7 +12,8 @@ mkdirSync(OUT_DIR, { recursive: true });
 const PAGES = [
   { path: "/",                        name: "01-home" },
   { path: "/features",                name: "02-features" },
-  { path: "/store",                   name: "03-store" },
+  { path: "/build",                   name: "03-build" },
+  { path: "/files",                   name: "03b-files" },
   { path: "/resources",               name: "04-resources" },
   { path: "/resources/quick-start",   name: "05-doc-quick-start" },
   { path: "/resources/user-manual",   name: "06-doc-user-manual" },

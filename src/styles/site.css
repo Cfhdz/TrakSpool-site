@@ -1,0 +1,949 @@
+/* File: src/styles/site.css */
+/* Site sections, built from the kit in components.css and the tokens in theme.css: page heads,
+   sections, the home hero and its console replica, icon tiles, feature / file / link cards,
+   numbered steps, the FAQ list, legal text and the closing call to action. Left-aligned and
+   tool-like, as in the console: no gradients, glows or glass. */
+
+/* ── Page head (every page except Home) ────────────────────────────────────── */
+.pageHead {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding-bottom: var(--sp-8);
+  border-bottom: 1px solid var(--border);
+}
+
+.pageTitle {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.015em;
+}
+
+.lead {
+  max-width: 42rem;
+  color: var(--text-muted);
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+}
+
+.meta {
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+}
+
+/* ── Section ───────────────────────────────────────────────────────────────── */
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  min-width: 0;
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  max-width: 44rem;
+}
+
+.sectionTitle {
+  font-size: clamp(var(--fs-xl), 2.6vw, 1.75rem);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+}
+
+.sectionText {
+  color: var(--text-muted);
+  font-size: var(--fs-lg);
+  line-height: 1.55;
+}
+
+.sectionFoot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+/* ── Home hero ─────────────────────────────────────────────────────────────── */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: var(--sp-10);
+  padding: var(--sp-6) 0 var(--sp-2);
+}
+
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-5);
+  min-width: 0;
+}
+
+.heroTitle {
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+.heroLead {
+  max-width: 36rem;
+  color: var(--text-muted);
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+
+.checkList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-5);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.checkList li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.checkList svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--success);
+}
+
+/* The console's Live Scale card, drawn with the same kit */
+.deviceFigure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  min-width: 0;
+}
+
+.deviceCardHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: 3rem;
+  padding: var(--sp-2) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.deviceCardTitle {
+  margin-right: auto;
+  font-weight: var(--fw-bold);
+}
+
+.deviceCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-4);
+}
+
+.readout {
+  padding: var(--sp-4);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.readoutValue {
+  margin: var(--sp-2) 0;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: clamp(2.5rem, 7vw, 3.25rem);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.readoutSub {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+}
+
+.spoolRow {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.spoolRow .swatch {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--r-full);
+}
+
+.spoolName {
+  font-weight: var(--fw-bold);
+}
+
+.spoolMeta {
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+}
+
+.spoolRow .badge {
+  margin-left: auto;
+}
+
+.meterRow {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-2);
+  font-size: var(--fs-sm);
+}
+
+.deviceCaption {
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+  text-align: center;
+}
+
+/* ── Icon tile: a tinted square holding a Lucide icon (tone classes recolour it) ── */
+.iconTile {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--r-md);
+  background: var(--tone-soft, var(--accent-soft));
+  color: var(--tone, var(--accent-text));
+}
+
+.iconTile svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* ── Feature card: icon, eyebrow, title, text, optional list ───────────────── */
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+}
+
+.featureCard h3 {
+  font-size: var(--fs-lg);
+}
+
+.featureCard p,
+.featureCard li {
+  color: var(--text-muted);
+}
+
+.featureCard .cardFoot {
+  margin-top: auto;
+}
+
+.bulletList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  padding-left: 1.125rem;
+  list-style: disc;
+}
+
+.bulletList li::marker {
+  color: var(--accent-text);
+}
+
+/* Two-column card with text and a large icon (Features spotlights) */
+.spotlight {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--sp-6);
+  padding: var(--sp-6);
+}
+
+.spotlight .stack {
+  gap: var(--sp-3);
+}
+
+.spotlight h2 {
+  font-size: var(--fs-xl);
+}
+
+.spotlight p,
+.spotlight li {
+  color: var(--text-muted);
+}
+
+.spotlight .iconTile {
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--r-lg);
+}
+
+.spotlight .iconTile svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Principles band: a panel with a heading and a row of badges */
+.band {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-8) var(--sp-6);
+}
+
+.band .sectionText {
+  max-width: 44rem;
+}
+
+.band .badge {
+  height: 1.75rem;
+  padding: 0 var(--sp-3);
+  font-size: var(--fs-sm);
+}
+
+/* ── Numbered steps ────────────────────────────────────────────────────────── */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--sp-4);
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+}
+
+.stepNumber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: var(--sp-1);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-full);
+  color: var(--accent-text);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.step h3 {
+  font-size: var(--fs-lg);
+}
+
+.step p {
+  color: var(--text-muted);
+}
+
+.step .stepAction {
+  margin-top: auto;
+  padding-top: var(--sp-2);
+}
+
+/* ── Source file cards (Build page and the home summary) ───────────────────── */
+.sourceGroups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+.sourceGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.sourceGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+.sourceCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+}
+
+/* not published yet: a dashed edge marks the card as a placeholder */
+.sourceCard--pending {
+  border-style: dashed;
+  border-color: var(--border-strong);
+  box-shadow: none;
+}
+
+.sourceCardHead {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.sourceCardHead h3 {
+  font-size: var(--fs-lg);
+}
+
+.sourceCard p {
+  color: var(--text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 1.375rem;
+  padding: 0 var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  white-space: nowrap;
+}
+
+.sourceCardFoot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2) var(--sp-3);
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+
+.placeholderNote {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+}
+
+.placeholderNote svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* compact variant on Home: icon, title and status only */
+.sourceGrid--compact {
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--sp-3);
+}
+
+.sourceGrid--compact .sourceCard {
+  flex-direction: row;
+  align-items: center;
+  padding: var(--sp-3) var(--sp-4);
+}
+
+.sourceCardText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+
+.sourceGrid--compact h3 {
+  font-size: var(--fs-md);
+}
+
+/* ── Parts list ────────────────────────────────────────────────────────────── */
+.partsCard {
+  padding: var(--sp-2) var(--sp-5);
+}
+
+/* a two-column list: the part, then what it is for, both left-aligned */
+.partsCard .kv > div {
+  display: grid;
+  grid-template-columns: minmax(0, 24rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--sp-1) var(--sp-6);
+  padding: var(--sp-3) 0;
+}
+
+.partsCard dt {
+  max-width: none;
+  color: var(--text);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+}
+
+.partsCard dd {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  text-align: left;
+}
+
+/* ── Link cards (docs, contact): the whole card is the link ────────────────── */
+.linkCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+  color: inherit;
+  transition:
+    background var(--dur-1) var(--ease),
+    border-color var(--dur-1) var(--ease);
+}
+
+a.linkCard:hover {
+  background: var(--surface-2);
+  border-color: var(--border-strong);
+  text-decoration: none;
+}
+
+.linkCard :is(h2, h3) {
+  font-size: var(--fs-lg);
+}
+
+.linkCard p {
+  color: var(--text-muted);
+}
+
+.linkCardFoot {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  margin-top: auto;
+  color: var(--accent-text);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+}
+
+.linkCardFoot svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.linkCard--pending {
+  border-style: dashed;
+  border-color: var(--border-strong);
+  box-shadow: none;
+}
+
+/* ── FAQ: one card, one row per question ───────────────────────────────────── */
+.faqGroups {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-8);
+}
+
+.faqGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+
+.faqGroup > h2 {
+  font-size: var(--fs-lg);
+}
+
+.faqList {
+  overflow: clip;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface-1);
+  box-shadow: var(--shadow-1);
+}
+
+.faqItem + .faqItem {
+  border-top: 1px solid var(--border);
+}
+
+.faqQuestion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  min-height: 3.25rem;
+  padding: var(--sp-3) var(--sp-5);
+  font-weight: var(--fw-bold);
+  list-style: none;
+  transition: background var(--dur-1) var(--ease);
+}
+
+.faqQuestion::-webkit-details-marker {
+  display: none;
+}
+
+.faqQuestion::after {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: -0.25rem;
+  border-right: 2px solid var(--text-subtle);
+  border-bottom: 2px solid var(--text-subtle);
+  transform: rotate(45deg);
+  transition: transform var(--dur-2) var(--ease);
+}
+
+.faqItem[open] > .faqQuestion::after {
+  margin-top: 0.25rem;
+  transform: rotate(-135deg);
+}
+
+.faqQuestion:hover {
+  background: var(--surface-2);
+}
+
+/* the list clips its corners, so the ring is drawn inside the row */
+.faqQuestion:focus-visible {
+  outline-offset: -2px;
+}
+
+.faqAnswer {
+  max-width: 48rem;
+  padding: 0 var(--sp-5) var(--sp-5);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* ── Legal pages: one readable column ──────────────────────────────────────── */
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  max-width: 44rem;
+  color: var(--text-muted);
+  font-size: var(--fs-lg);
+  line-height: 1.6;
+}
+
+.prose h2 {
+  margin-top: var(--sp-6);
+  color: var(--text);
+  font-size: var(--fs-xl);
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+}
+
+.prose strong {
+  color: var(--text);
+}
+
+.prose li + li {
+  margin-top: var(--sp-1);
+}
+
+/* ── Closing call to action ────────────────────────────────────────────────── */
+.ctaBand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding: var(--sp-8) var(--sp-6);
+}
+
+.ctaBand .sectionHead {
+  max-width: 36rem;
+}
+
+/* ── 404 ───────────────────────────────────────────────────────────────────── */
+.notFound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-12) 0;
+  text-align: center;
+}
+
+.notFound svg {
+  width: 7.5rem;
+  height: 7.5rem;
+  color: var(--text-subtle);
+}
+
+.notFound .lead {
+  max-width: 28rem;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .sourceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-8);
+  }
+
+  .deviceFigure {
+    max-width: 34rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .sourceGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pageHead {
+    padding-bottom: var(--sp-6);
+  }
+
+  .hero {
+    padding-top: var(--sp-2);
+  }
+
+  .spotlight {
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--sp-5);
+  }
+
+  .spotlight .iconTile {
+    order: -1;
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .spotlight .iconTile svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .band,
+  .ctaBand {
+    padding: var(--sp-6) var(--sp-5);
+  }
+
+  .faqQuestion {
+    padding: var(--sp-3) var(--sp-4);
+  }
+
+  .faqAnswer {
+    padding: 0 var(--sp-4) var(--sp-4);
+  }
+
+  .partsCard {
+    padding: var(--sp-1) var(--sp-4);
+  }
+
+  .partsCard .kv > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Build it guide ────────────────────────────────────────────────────────── */
+.guideOverview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-4);
+}
+
+.guideFacts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-5);
+}
+
+.guideFacts h3 {
+  font-size: var(--fs-lg);
+}
+
+.guideFacts .bulletList {
+  color: var(--text-muted);
+}
+
+/* jump links to the steps */
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.toc a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: var(--control-h-sm);
+  padding: 0 var(--sp-3) 0 var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-full);
+  background: var(--surface-1);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  transition:
+    border-color var(--dur-1) var(--ease),
+    color var(--dur-1) var(--ease);
+}
+
+.toc a:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.tocNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: var(--r-full);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: var(--fs-2xs);
+  font-weight: var(--fw-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.guideSteps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.guideStep {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  padding: var(--sp-6);
+}
+
+.guideStepHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.guideStepHead h2 {
+  margin-right: auto;
+  font-size: var(--fs-xl);
+}
+
+.guideStepHead .stepNumber {
+  margin-bottom: 0;
+}
+
+.guideSummary {
+  max-width: 48rem;
+  color: var(--text-muted);
+  font-size: var(--fs-lg);
+}
+
+.guideMedia {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--sp-3);
+}
+
+.guideFigure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.guideFigure img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface-sunken);
+}
+
+.guideFigure figcaption {
+  color: var(--text-subtle);
+  font-size: var(--fs-xs);
+}
+
+/* an empty photo frame, until the step's images are added */
+.photoSlot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  aspect-ratio: 4 / 3;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-sunken);
+  color: var(--text-subtle);
+  font-size: var(--fs-sm);
+}
+
+.photoSlot svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.guideInstructions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  max-width: 48rem;
+  padding-left: 1.25rem;
+  color: var(--text);
+  font-size: var(--fs-lg);
+  list-style: decimal;
+}
+
+.guideInstructions li::marker {
+  color: var(--accent-text);
+  font-weight: var(--fw-bold);
+}
+
+.guideStep .alert {
+  max-width: 48rem;
+}
+
+@media (max-width: 720px) {
+  .guideOverview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .guideStep {
+    padding: var(--sp-5) var(--sp-4);
+  }
+
+  .guideMedia {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .guideInstructions,
+  .guideSummary {
+    font-size: var(--fs-md);
+  }
+}

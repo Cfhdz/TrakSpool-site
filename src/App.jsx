@@ -1,16 +1,30 @@
 // File: src/App.jsx
-import { useState, useEffect } from "react";
-import { Routes, Route, NavLink, Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, Navigate, NavLink, Route, Routes } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
+import {
+  BookOpen,
+  CircleHelp,
+  Download,
+  FolderOpen,
+  Github,
+  Hammer,
+  House,
+  Mail,
+  Menu,
+  Sparkles,
+  X,
+} from "lucide-react";
 import ThemeToggle from "./components/ThemeToggle.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import ScrollToTopOnRouteChange from "./components/ScrollToTopOnRouteChange.jsx";
-import NewsletterSignup from "./components/NewsletterSignup.jsx";
-import SettingsPanel from "./components/SettingsPanel.jsx";
+import { GITHUB } from "./data/project.js";
+import flasherManifest from "../public/flasher/manifest.json";
 
 import Home from "./pages/Home.jsx";
 import Features from "./pages/Features.jsx";
-import Store from "./pages/Store.jsx";
+import Build from "./pages/Build.jsx";
+import Files from "./pages/Files.jsx";
 import Resources from "./pages/Resources.jsx";
 import Support from "./pages/Support.jsx";
 import Contact from "./pages/Contact.jsx";
@@ -20,63 +34,97 @@ import Privacy from "./pages/Privacy.jsx";
 import ToS from "./pages/ToS.jsx";
 import Flasher from "./pages/Flasher.jsx";
 
-function Header() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const linkClass = ({ isActive }) => (isActive ? "active" : "");
+const NAV = [
+  { to: "/features", label: "Features", icon: <Sparkles aria-hidden="true" /> },
+  { to: "/build", label: "Build it", icon: <Hammer aria-hidden="true" /> },
+  { to: "/files", label: "Files", icon: <FolderOpen aria-hidden="true" /> },
+  { to: "/resources", label: "Docs", icon: <BookOpen aria-hidden="true" /> },
+  { to: "/flasher", label: "Firmware", icon: <Download aria-hidden="true" /> },
+  { to: "/support", label: "FAQ", icon: <CircleHelp aria-hidden="true" /> },
+  { to: "/contact", label: "Contact", icon: <Mail aria-hidden="true" /> },
+];
 
-  // Close mobile menu on route change
+const navClass = ({ isActive }) => (isActive ? "navItem active" : "navItem");
+
+function Brand({ onClick }) {
+  return (
+    <Link to="/" className="brandLink" aria-label="TrakSpool home" onClick={onClick}>
+      <img className="logoImg" src="/spool-logo.svg" alt="" width="32" height="32" />
+      <span className="brandTitle">TrakSpool</span>
+    </Link>
+  );
+}
+
+function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const closeMenu = () => setMenuOpen(false);
+
+  // Escape closes the phone menu
   useEffect(() => {
-    setMobileMenuOpen(false);
-  }, [location.pathname]);
+    if (!menuOpen) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [menuOpen]);
 
   return (
     <header className="header">
       <div className="headerInner">
-        {/* Brand (logo + name) */}
-        <Link to="/" className="brand brandLink" aria-label="TrakSpool Home">
-          <img className="logoImg" src="/logo.svg" alt="TrakSpool logo" />
-          <div className="brandText">
-            <div className="brandTitle">TrakSpool</div>
-          </div>
-        </Link>
+        <Brand onClick={closeMenu} />
 
-        {/* Desktop nav */}
-        <nav className="nav navDesktop" aria-label="Primary">
-          <NavLink to="/features" className={linkClass}>Features</NavLink>
-          <NavLink to="/store" className={linkClass}>Store</NavLink>
-          <NavLink to="/resources" className={linkClass}>Resources</NavLink>
-          <NavLink to="/support" className={linkClass}>Support</NavLink>
-          <NavLink to="/contact" className={linkClass}>Contact</NavLink>
-          <ThemeToggle />
+        <nav className="primaryNav" aria-label="Primary">
+          {NAV.map(({ to, label }) => (
+            <NavLink key={to} to={to} className={navClass}>
+              {label}
+            </NavLink>
+          ))}
         </nav>
 
-        {/* Mobile: theme toggle + hamburger */}
-        <div className="mobileHeaderActions">
+        <div className="headerActions">
+          {GITHUB.published && (
+            <a
+              className="btn btn--quiet btn--icon"
+              href={GITHUB.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TrakSpool on GitHub"
+              title="TrakSpool on GitHub"
+            >
+              <Github aria-hidden="true" />
+            </a>
+          )}
           <ThemeToggle />
           <button
-            className="hamburger"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileMenuOpen}
+            className="btn btn--quiet btn--icon menuButton"
             type="button"
+            onClick={() => setMenuOpen((open) => !open)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="menuSheet"
           >
-            <span className={`hamburgerBar ${mobileMenuOpen ? "hamburgerBar--open" : ""}`} />
-            <span className={`hamburgerBar ${mobileMenuOpen ? "hamburgerBar--open" : ""}`} />
-            <span className={`hamburgerBar ${mobileMenuOpen ? "hamburgerBar--open" : ""}`} />
+            {menuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile dropdown nav */}
-      {mobileMenuOpen && (
-        <nav className="mobileNav" aria-label="Mobile navigation">
-          <NavLink to="/features" className={linkClass}>Features</NavLink>
-          <NavLink to="/store" className={linkClass}>Store</NavLink>
-          <NavLink to="/resources" className={linkClass}>Resources</NavLink>
-          <NavLink to="/support" className={linkClass}>Support</NavLink>
-          <NavLink to="/contact" className={linkClass}>Contact</NavLink>
-        </nav>
+      {menuOpen && (
+        <>
+          <div className="menuScrim" onClick={closeMenu} aria-hidden="true" />
+          <nav id="menuSheet" className="menuSheet" aria-label="Menu">
+            <NavLink to="/" end className={navClass} onClick={closeMenu}>
+              <House aria-hidden="true" />
+              Home
+            </NavLink>
+            {NAV.map(({ to, label, icon }) => (
+              <NavLink key={to} to={to} className={navClass} onClick={closeMenu}>
+                {icon}
+                {label}
+              </NavLink>
+            ))}
+          </nav>
+        </>
       )}
     </header>
   );
@@ -86,34 +134,63 @@ function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="footer" aria-label="Footer">
+    <footer className="footer">
       <div className="footerInner">
-        {/* Row 1: links */}
-        <div className="footerTop">
-          <div className="footerBrand">TrakSpool</div>
-          <div className="footerLinks">
-            <Link to="/">Home</Link>
-            <Link to="/features">Features</Link>
-            <Link to="/store">Store</Link>
-            <Link to="/support">Support</Link>
-            <Link to="/contact">Contact</Link>
-          </div>
+        <div className="footerBrand">
+          <Brand />
+          <p className="footerTagline">
+            Open-source filament inventory for 3D printing: a spool scale with an NFC tag reader,
+            and the apps to run it.
+          </p>
         </div>
 
-        {/* Row 2: newsletter */}
-        <div className="newsletter" aria-label="Product Updates signup">
-          <div className="newsletterTitle">Product Updates</div>
-          <NewsletterSignup />
-        </div>
+        <nav className="footerCol" aria-labelledby="footer-project">
+          <h2 id="footer-project" className="eyebrow">
+            Project
+          </h2>
+          <ul className="footerLinks">
+            <li><Link to="/features">Features</Link></li>
+            <li><Link to="/build">Build it</Link></li>
+            <li><Link to="/files">Source files</Link></li>
+            <li><Link to="/resources">Docs</Link></li>
+            <li><Link to="/flasher">Firmware updater</Link></li>
+          </ul>
+        </nav>
 
-        {/* Row 3: copyright */}
+        <nav className="footerCol" aria-labelledby="footer-community">
+          <h2 id="footer-community" className="eyebrow">
+            Community
+          </h2>
+          <ul className="footerLinks">
+            <li>
+              {GITHUB.published ? (
+                <a href={GITHUB.href} target="_blank" rel="noopener noreferrer">
+                  GitHub
+                </a>
+              ) : (
+                <span className="footerPending">
+                  GitHub <span className="badge">Soon</span>
+                </span>
+              )}
+            </li>
+            <li><Link to="/support">FAQ</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+          </ul>
+        </nav>
+
+        <nav className="footerCol" aria-labelledby="footer-legal">
+          <h2 id="footer-legal" className="eyebrow">
+            Legal
+          </h2>
+          <ul className="footerLinks">
+            <li><Link to="/privacy">Privacy</Link></li>
+            <li><Link to="/terms">Terms</Link></li>
+          </ul>
+        </nav>
+
         <div className="footerBottom">
-          <span>© {year} TrakSpool. All rights reserved.</span>
-          <span className="footerLegal">
-            <Link to="/privacy">Privacy</Link>
-            <span className="footerSeparator">·</span>
-            <Link to="/terms">Terms</Link>
-          </span>
+          <span>© {year} TrakSpool</span>
+          <span className="num">Firmware v{flasherManifest.version}</span>
         </div>
       </div>
     </footer>
@@ -123,42 +200,34 @@ function Footer() {
 export default function App() {
   return (
     <>
-      <div className="ambientGlow" />
+      <a className="skipLink" href="#main">
+        Skip to content
+      </a>
       <Header />
+      <ScrollToTopOnRouteChange />
 
-      <div className="container">
-        <ScrollToTopOnRouteChange />
+      <main id="main" className="page">
         <Routes>
           <Route path="/" element={<Home />} />
-
-          {/* Routes */}
           <Route path="/features" element={<Features />} />
-          <Route path="/store" element={<Store />} />
+          <Route path="/build" element={<Build />} />
+          <Route path="/files" element={<Files />} />
+          <Route path="/store" element={<Navigate to="/build" replace />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/resources/:slug" element={<DocViewer />} />
           <Route path="/support" element={<Support />} />
           <Route path="/contact" element={<Contact />} />
-
-          {/* Tools */}
           <Route path="/flasher" element={<Flasher />} />
-
-          {/* Legal */}
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<ToS />} />
-          
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </main>
 
-        <Footer />
-      </div>
-      
-      {/* Scroll to top button - appears after scrolling down */}
+      <Footer />
       <ScrollToTop />
-      
-      {/* Settings panel - floating button bottom-left */}
-      <SettingsPanel />
 
-      {/* Vercel Web Analytics - cookieless page views */}
+      {/* Vercel Web Analytics: cookieless page views */}
       <Analytics />
     </>
   );

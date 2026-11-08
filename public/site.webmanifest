@@ -1,11 +1,11 @@
 {
   "name": "TrakSpool",
   "short_name": "TrakSpool",
-  "description": "Filament Inventory Management System",
+  "description": "Open-source filament inventory system",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#070b14",
-  "theme_color": "#070b14",
+  "background_color": "#171411",
+  "theme_color": "#171411",
   "icons": [
     {
       "src": "/favicon-32x32.png",

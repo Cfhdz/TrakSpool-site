@@ -1,273 +1,324 @@
 // File: src/pages/Home.jsx
 import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Check,
+  CircleHelp,
+  Gauge,
+  Hammer,
+  NotebookPen,
+  PackageSearch,
+  SlidersHorizontal,
+  Tag,
+  TriangleAlert,
+} from "lucide-react";
 import usePageMeta from "../hooks/usePageMeta.js";
-import { ScrollToElementById } from "../components/ScrollToElementById.jsx";
-import { FeatureIcon } from "../components/FeatureIcon";
-import Timeline from "../components/Timeline.jsx";
+import Steps from "../components/Steps.jsx";
+import SourceCard from "../components/SourceCard.jsx";
+import { SOURCES } from "../data/project.js";
+import flasherManifest from "../../public/flasher/manifest.json";
+
+// A copy of the admin console's Live Scale card, drawn with the same kit. Decorative: the
+// caption under it says what it shows.
+function DeviceCard() {
+  return (
+    <figure className="deviceFigure">
+      <div className="panel" aria-hidden="true">
+        <div className="deviceCardHead">
+          <span className="deviceCardTitle">Live Scale</span>
+          <span className="badge t-success">Stable</span>
+        </div>
+        <div className="deviceCardBody">
+          <div className="readout">
+            <div className="eyebrow">Grams net</div>
+            <div className="readoutValue">618.6</div>
+            <div className="readoutSub">Scale: 868.6g − Spool: 250g</div>
+          </div>
+          <div className="spoolRow">
+            <span className="swatch" style={{ "--c": "#2b2c31" }} />
+            <div>
+              <div className="spoolName">Prusament PLA</div>
+              <div className="spoolMeta">Galaxy Black · 1.75 mm</div>
+            </div>
+            <span className="badge t-accent">Tagged</span>
+          </div>
+          <div>
+            <div className="meterRow">
+              <span className="muted">Material remaining</span>
+              <span className="num">619g / 1000g</span>
+            </div>
+            <div className="progress progress--accent">
+              <span style={{ width: "62%" }} />
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption className="deviceCaption">
+        The admin console, served by the device to any browser on your network.
+      </figcaption>
+    </figure>
+  );
+}
 
 function Hero() {
   return (
-    <section className="hero">
-      {/* LEFT */}
-      <div className="panel heroLeft">
-
-        <span className="heroKicker">Filament Inventory Management System</span>
-
-        <h1 className="pageTitle">
+    <section className="hero" aria-labelledby="hero-title">
+      <div className="heroText">
+        <div className="cluster">
+          <span className="badge t-accent">Open source</span>
+          <span className="badge">Firmware v{flasherManifest.version}</span>
+        </div>
+        <h1 id="hero-title" className="heroTitle">
           Smart spools. Zero guesswork.
         </h1>
-
-        <p className="lead">
-          TrakSpool combines RFID tagging with precision weighing to manage
-          your filament inventory — so you always know exactly what's loaded
-          and whether you have enough for your next print.
+        <p className="heroLead">
+          TrakSpool is an open-source filament inventory system for 3D printing: a spool scale
+          with an NFC tag reader that knows what is on every spool and how much is left. Build
+          your own. The firmware, the apps, the enclosure and the PCB are all open.
         </p>
-
-        <div className="heroCtas">
-          <button
-            className="btn btn--primary btn--lg"
-            type="button"
-            onClick={() => ScrollToElementById("newsletterEmail")}
-          >
-            Join the Waitlist
-          </button>
-          <Link to="/features" className="btn">
-            See All Features
+        <div className="ctaRow">
+          <Link className="btn btn--lg" to="/build">
+            <Hammer aria-hidden="true" />
+            Build your own
+          </Link>
+          <Link className="btn btn--ghost btn--lg" to="/features">
+            See the features
           </Link>
         </div>
-
-        <div className="trustBadges">
-          <span>✓ No cloud required</span>
-          <span>✓ No subscription</span>
-          <span>✓ Your data stays yours</span>
-        </div>
+        <ul className="checkList">
+          <li>
+            <Check aria-hidden="true" />
+            Open source, hardware included
+          </li>
+          <li>
+            <Check aria-hidden="true" />
+            No cloud, no account
+          </li>
+          <li>
+            <Check aria-hidden="true" />
+            Works offline
+          </li>
+        </ul>
       </div>
-
-      {/* RIGHT */}
-      <div className="panel heroRight">
-        <div className="mock">
-          <div className="mockInner">
-            <div>
-              <div className="mockTitle">Prusament PLA</div>
-              <div className="mockLine">Galaxy Black • 1.75mm</div>
-              <div className="mockLine" style={{ marginTop: 'var(--space-3)' }}>
-                <strong style={{ fontSize: 'var(--text-xl)', color: 'var(--accent-cyan)' }}>847g</strong>
-                <span style={{ opacity: 0.6 }}> remaining</span>
-              </div>
-              <div className="mockLine">Last used: 2 days ago</div>
-            </div>
-            <div className="mockLine mockLineNote">Preview — design in progress</div>
-          </div>
-        </div>
-        <div className="badges">
-          <span className="badge">RFID / NFC</span>
-          <span className="badge">Precision Scale</span>
-          <span className="badge">Offline-First</span>
-          <span className="badge">OpenPrintTag</span>
-        </div>
-      </div>
+      <DeviceCard />
     </section>
   );
 }
+
+const PROBLEMS = [
+  {
+    icon: <TriangleAlert aria-hidden="true" />,
+    title: "The mid-print runout",
+    text: "A 12-hour print, you walk away, and come back to a failed part: the spool ran out at 80%. The printer paused, but too late.",
+  },
+  {
+    icon: <CircleHelp aria-hidden="true" />,
+    title: "The mystery spool",
+    text: "Half-used spools pile up. Is there enough on this one for the next print? Are you going to chance it?",
+  },
+  {
+    icon: <NotebookPen aria-hidden="true" />,
+    title: "The tracking game",
+    text: "A notepad, a spreadsheet, a kitchen scale. There has to be a better way.",
+  },
+];
 
 function TheProblem() {
   return (
-    <section className="panel section sectionCentered">
-      <h2 className="sectionTitle">Sound familiar?</h2>
-
-      <div className="statCallouts">
-        <div className="statCallout">
-          <div className="statCalloutIcon">🛑</div>
-          <div className="statCalloutTitle">The mid-print runout</div>
-          <p className="statCalloutDesc">
-            12-hour print, walk away, come back to a failed print, the
-            spool ran out at 80%.Sure it paused, but it was too late. The damage was done.
-          </p>
-        </div>
-
-        <div className="statCallout">
-          <div className="statCalloutIcon">❓</div>
-          <div className="statCalloutTitle">The mystery spool</div>
-          <p className="statCalloutDesc">
-            Half-used spools pile up, is it enough for the next print? Are you going to chance it?
-          </p>
-        </div>
-
-        <div className="statCallout">
-          <div className="statCalloutIcon">⚖️</div>
-          <div className="statCalloutTitle">The tracking game</div>
-          <p className="statCalloutDesc">
-            Notepad? Spreadsheet? kitchen scale? There has to be a better way.
-          </p>
-        </div>
+    <section className="section" aria-labelledby="problem-title">
+      <div className="sectionHead">
+        <p className="eyebrow">The problem</p>
+        <h2 id="problem-title" className="sectionTitle">
+          Sound familiar?
+        </h2>
+      </div>
+      <div className="grid grid-3">
+        {PROBLEMS.map(({ icon, title, text }) => (
+          <div key={title} className="card featureCard">
+            <span className="iconTile t-warning">{icon}</span>
+            <h3>{title}</h3>
+            <p>{text}</p>
+          </div>
+        ))}
       </div>
     </section>
   );
 }
+
+const HOW_IT_WORKS = [
+  { title: "Tag it", text: "Stick an NFC tag on any spool." },
+  {
+    title: "Track it",
+    text: "Put the spool on TrakSpool. Enter the details once, or pick a preset, and TrakSpool writes them to the tag: brand, material, color, temperatures and remaining weight.",
+  },
+  {
+    title: "Trust it",
+    text: "Check what is left before you print, or leave the spool on TrakSpool while you print. The remaining weight updates as filament is used.",
+  },
+];
 
 function HowItWorks() {
-  const steps = [
-    {
-      title: "Tag it",
-      description: "Stick an NFC tag on any spool." 
-    },
-    {
-      title: "Track it",
-      description: "Place the spool on the TrakSpool S1. Enter the details once, or use a preset, and TrakSpool encodes the tag with all the details: brand, material, color, temperatures, and remaining weight."
-    },
-    {
-      title: "Trust it",
-      description: "Check how much remains before you print, or leave it on TrakSpool while you print. The remaining weight updates automatically as filament is used."
-    }
-  ];
-
   return (
-    <section className="panel section sectionCentered">
-      <h2 className="sectionTitle">How it works</h2>
-      <Timeline steps={steps} />
+    <section className="section" aria-labelledby="how-title">
+      <div className="sectionHead">
+        <p className="eyebrow">How it works</p>
+        <h2 id="how-title" className="sectionTitle">
+          Tag it. Track it. Trust it.
+        </h2>
+      </div>
+      <Steps steps={HOW_IT_WORKS} />
     </section>
   );
 }
 
-function WhatYouGet() {
+const CAPABILITIES = [
+  {
+    icon: <Tag aria-hidden="true" />,
+    eyebrow: "Universal",
+    title: "Tag any spool",
+    text: "TrakSpool uses standard NFC Type 5 tags. Stick one on any spool you own, even from brands that do not tag their spools.",
+  },
+  {
+    icon: <PackageSearch aria-hidden="true" />,
+    eyebrow: "Core",
+    title: "Inventory management",
+    text: "Every tagged spool, and every unopened spool you enter, is in one searchable inventory. Filter by color, material, brand or what is left. Run Out Check suggests which spools to use up first.",
+  },
+  {
+    icon: <SlidersHorizontal aria-hidden="true" />,
+    eyebrow: "Portable",
+    title: "Presets that travel",
+    text: "Save filament settings as presets. When you tag a spool the data lives on the tag itself, so temperatures and notes move with the spool, not with one device.",
+  },
+  {
+    icon: <Gauge aria-hidden="true" />,
+    eyebrow: "Flexible",
+    title: "Control it your way",
+    text: "Use the OLED screen and rotary dial on the device, the admin console in any browser on your network, or the desktop app. A phone app is planned.",
+  },
+];
+
+function Capabilities() {
   return (
-    <section className="panel section sectionCentered">
-      <h2 className="sectionTitle">More than a smart scale</h2>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-5)' }}>
-        TrakSpool is a complete filament inventory management system.
-      </p>
-
-      <div className="splitRows">
-        <div className="splitRow">
-          <div className="splitRowVisual">
-            <FeatureIcon name="tag" size={56} />
+    <section className="section" aria-labelledby="capabilities-title">
+      <div className="sectionHead">
+        <p className="eyebrow">What it does</p>
+        <h2 id="capabilities-title" className="sectionTitle">
+          More than a smart scale
+        </h2>
+        <p className="sectionText">TrakSpool is a complete filament inventory system.</p>
+      </div>
+      <div className="grid grid-2">
+        {CAPABILITIES.map(({ icon, eyebrow, title, text }) => (
+          <div key={title} className="card featureCard">
+            <span className="iconTile">{icon}</span>
+            <p className="eyebrow">{eyebrow}</p>
+            <h3>{title}</h3>
+            <p>{text}</p>
           </div>
-          <div className="splitRowContent">
-            <span className="splitRowTag">Universal</span>
-            <h3 className="splitRowTitle">Tag any spool</h3>
-            <p className="splitRowDesc">
-              TrakSpool works with standard NFC Type 5 tags. Stick one on any
-              spool you own — even spools from manufacturers that don't support
-              RFID. Ten tags are included with every unit. Additional are available for purchase.
-            </p>
-          </div>
-        </div>
-
-        <div className="splitRow">
-          <div className="splitRowVisual">
-            <FeatureIcon name="inventory" size={56} />
-          </div>
-          <div className="splitRowContent">
-            <span className="splitRowTag">Core Feature</span>
-            <h3 className="splitRowTitle">Inventory management</h3>
-            <p className="splitRowDesc">
-              Every tagged spool, and unopened spool entered in your library is tracked in a searchable inventory. Filter by
-              color, material, brand, or remaining amount. Always know what you
-              have and where to find it. The ROC feature recommends which spools to use so you don't waste filament.
-            </p>
-          </div>
-        </div>
-
-        <div className="splitRow">
-          <div className="splitRowVisual">
-            <FeatureIcon name="presets" size={56} />
-          </div>
-          <div className="splitRowContent">
-            <span className="splitRowTag">Portable</span>
-            <h3 className="splitRowTitle">Presets that travel</h3>
-            <p className="splitRowDesc">
-              Save your filament parameters as presets. When you tag a spool, that
-              data lives on the tag itself — temperatures, speeds, and notes
-              move with the spool, not stuck on one device.
-            </p>
-          </div>
-        </div>
-
-        <div className="splitRow">
-          <div className="splitRowVisual">
-            <FeatureIcon name="dashboard" size={56} />
-          </div>
-          <div className="splitRowContent">
-            <span className="splitRowTag">Flexible</span>
-            <h3 className="splitRowTitle">Control it your way</h3>
-            <p className="splitRowDesc">
-              Use the built-in OLED screen and rotary dial for quick access,
-              open the web-based admin console from any browser on your network, 
-              use the mobile app (coming soon), or the desktop application for advanced features.
-            </p>
-          </div>
-        </div>
+        ))}
       </div>
     </section>
   );
 }
 
-function BuiltDifferent() {
+function OpenSource() {
   return (
-    <section className="panel section sectionCentered">
-      <div className="highlightBand">
-        <h2 className="highlightBandTitle">No cloud. No subscription. No tracking.</h2>
-        <p className="highlightBandDesc">
-          TrakSpool is flexible, simple if you want it to be, and powerful if you need it to be depending on where YOU are in your 3D printing journey.Just set it up and start tracking your filament inventory with confidence.
+    <section className="section" aria-labelledby="open-title">
+      <div className="sectionHead">
+        <p className="eyebrow">Open source</p>
+        <h2 id="open-title" className="sectionTitle">
+          Open from the enclosure to the code
+        </h2>
+        <p className="sectionText">
+          The printed parts, the circuit board, the firmware and the apps are all part of the
+          project. Build one, change it, or help improve it.
         </p>
-        <div className="highlightPills">
-          <span className="highlightPill">
-            <span className="highlightPillIcon">✓</span> Works fully offline
-          </span>
-          <span className="highlightPill">
-            <span className="highlightPillIcon">✓</span> No accounts or sign-ups
-          </span>
-          <span className="highlightPill">
-            <span className="highlightPillIcon">✓</span> No recurring fees
-          </span>
-          <span className="highlightPill">
-            <span className="highlightPillIcon">✓</span> Buy once, own it forever
-          </span>
-        </div>
+      </div>
+      <ul className="sourceGrid sourceGrid--compact">
+        {SOURCES.map((source) => (
+          <SourceCard key={source.id} source={source} compact />
+        ))}
+      </ul>
+      <div className="sectionFoot">
+        <Link className="btn btn--ghost" to="/files">
+          All source files
+          <ArrowRight aria-hidden="true" />
+        </Link>
       </div>
     </section>
   );
 }
 
-function FinalCTA() {
+function Principles() {
   return (
-    <section className="panel section sectionCentered">
-      <h2 className="sectionTitle">Be first in line</h2>
-
-      <p style={{ color: 'var(--text-secondary)', marginBottom: 'var(--space-5)' }}>
-        TrakSpool is in active development. Join the waitlist for build updates, 
-        early access opportunities, and launch pricing.
+    <section className="panel band" aria-labelledby="principles-title">
+      <h2 id="principles-title" className="sectionTitle">
+        No cloud. No subscription. No tracking.
+      </h2>
+      <p className="sectionText">
+        TrakSpool is as simple or as powerful as you need, wherever you are in your 3D printing
+        journey. Set it up once and track your filament with confidence. Your data stays on your
+        device.
       </p>
+      <ul className="cluster">
+        <li className="badge t-success">
+          <Check aria-hidden="true" />
+          Works fully offline
+        </li>
+        <li className="badge t-success">
+          <Check aria-hidden="true" />
+          No accounts or sign-ups
+        </li>
+        <li className="badge t-success">
+          <Check aria-hidden="true" />
+          No recurring fees
+        </li>
+        <li className="badge t-success">
+          <Check aria-hidden="true" />
+          Open source
+        </li>
+      </ul>
+    </section>
+  );
+}
 
-      <div className="ctaRow">
-        <button
-          className="btn btn--primary btn--lg"
-          type="button"
-          onClick={() => ScrollToElementById("newsletterEmail")}
-        >
-          Join the Waitlist
-        </button>
+function FinalCta() {
+  return (
+    <section className="panel ctaBand" aria-labelledby="cta-title">
+      <div className="sectionHead">
+        <h2 id="cta-title" className="sectionTitle">
+          Build one, or help build it
+        </h2>
+        <p className="sectionText">
+          The Build it guide goes from printed parts to a working scale. Questions, bug reports and
+          ideas are welcome.
+        </p>
       </div>
-
-      <div className="trustBadges trustBadges--muted">
-        <span>✓ No spam — just milestones</span>
-        <span>✓ Unsubscribe anytime</span>
+      <div className="ctaRow">
+        <Link className="btn btn--lg" to="/build">
+          Build it
+        </Link>
+        <Link className="btn btn--ghost btn--lg" to="/files">
+          Get the files
+        </Link>
       </div>
     </section>
   );
 }
 
 export default function Home() {
-  usePageMeta(); // Uses defaults — homepage title and description
+  usePageMeta(); // homepage title and description
 
   return (
     <>
       <Hero />
       <TheProblem />
       <HowItWorks />
-      <WhatYouGet />
-      <BuiltDifferent />
-      <FinalCTA />
+      <Capabilities />
+      <OpenSource />
+      <Principles />
+      <FinalCta />
     </>
   );
 }
