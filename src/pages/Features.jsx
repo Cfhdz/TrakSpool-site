@@ -69,8 +69,8 @@ const FEATURES = [
     points: [
       "Served by the device itself",
       "Opens in any browser on your network",
-      "Laid out for phones, tablets and desktops",
-      "No accounts to create; a desktop app too",
+      "Laid out for phones, tablets and computers",
+      "No accounts to create",
     ],
     summary: "Manage your inventory and settings from any device.",
   },

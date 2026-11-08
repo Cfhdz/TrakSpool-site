@@ -140,7 +140,7 @@ function Footer() {
           <Brand />
           <p className="footerTagline">
             Open-source filament inventory for 3D printing: a spool scale with an NFC tag reader,
-            and the apps to run it.
+            and the web console to run it.
           </p>
         </div>
 

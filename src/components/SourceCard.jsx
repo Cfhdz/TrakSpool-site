@@ -10,7 +10,6 @@ import {
   LayoutDashboard,
   ListChecks,
   MapPin,
-  Monitor,
 } from "lucide-react";
 
 const ICONS = {
@@ -19,7 +18,6 @@ const ICONS = {
   bom: ListChecks,
   firmware: Cpu,
   console: LayoutDashboard,
-  desktop: Monitor,
   docs: BookOpen,
 };
 

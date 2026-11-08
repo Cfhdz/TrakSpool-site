@@ -83,16 +83,6 @@ export const SOURCES = [
     published: false,
   },
   {
-    id: "desktop",
-    group: "software",
-    icon: "desktop",
-    title: "Desktop app",
-    description: "Wraps the admin console in a desktop window and keeps an offline copy of your inventory.",
-    formats: ["Electron", "SQLite"],
-    href: "https://github.com/Cfhdz/TrakSpool-desktop",
-    published: false,
-  },
-  {
     id: "docs",
     group: "docs",
     icon: "docs",

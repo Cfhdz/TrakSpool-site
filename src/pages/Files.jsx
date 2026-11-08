@@ -10,7 +10,7 @@ export default function Files() {
   usePageMeta({
     title: "Source files",
     description:
-      "TrakSpool's open-source files: enclosure CAD, PCB, bill of materials, firmware, admin console, desktop app and documentation.",
+      "TrakSpool's open-source files: enclosure CAD, PCB, bill of materials, firmware, admin console and documentation.",
   });
 
   return (
@@ -19,7 +19,7 @@ export default function Files() {
         <p className="eyebrow">Source files</p>
         <h1 className="pageTitle">Every file to make one</h1>
         <p className="lead">
-          Design files for the hardware, source code for the firmware and apps, and the
+          Design files for the hardware, source code for the firmware and the admin console, and the
           documentation. Files marked “Coming soon” are being prepared for release.
         </p>
       </header>

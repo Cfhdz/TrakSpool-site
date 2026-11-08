@@ -28,7 +28,7 @@ const FAQ_GROUPS = [
     items: [
       {
         q: "Is TrakSpool open source?",
-        a: "Yes. The firmware, the admin console, the desktop app, the documentation, and the enclosure and PCB design files are all part of the open-source project. The Files page lists each one; files marked “Coming soon” are still being prepared for release.",
+        a: "Yes. The firmware, the admin console, the documentation, and the enclosure and PCB design files are all part of the open-source project. The Files page lists each one; files marked “Coming soon” are still being prepared for release.",
       },
       {
         q: "Can I buy a TrakSpool?",
@@ -106,7 +106,7 @@ const FAQ_GROUPS = [
       },
       {
         q: "How do I control it?",
-        a: "On the device with the OLED screen and rotary encoder, through the admin console in any browser on your local network, or with the desktop app. No accounts to create.",
+        a: "On the device with the OLED screen and rotary encoder, or through the admin console in any browser on your local network. No accounts to create.",
       },
       {
         q: "Will TrakSpool integrate with my printer?",

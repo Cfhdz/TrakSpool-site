@@ -74,7 +74,7 @@ function Hero() {
         <p className="heroLead">
           TrakSpool is an open-source filament inventory system for 3D printing: a spool scale
           with an NFC tag reader that knows what is on every spool and how much is left. Build
-          your own. The firmware, the apps, the enclosure and the PCB are all open.
+          your own. The firmware, the admin console, the enclosure and the PCB are all open.
         </p>
         <div className="ctaRow">
           <Link className="btn btn--lg" to="/build">
@@ -194,7 +194,7 @@ const CAPABILITIES = [
     icon: <Gauge aria-hidden="true" />,
     eyebrow: "Flexible",
     title: "Control it your way",
-    text: "Use the OLED screen and rotary dial on the device, the admin console in any browser on your network, or the desktop app. A phone app is planned.",
+    text: "Use the OLED screen and rotary dial on the device, or the admin console in any browser on your network. A phone app is planned.",
   },
 ];
 
@@ -231,7 +231,7 @@ function OpenSource() {
           Open from the enclosure to the code
         </h2>
         <p className="sectionText">
-          The printed parts, the circuit board, the firmware and the apps are all part of the
+          The printed parts, the circuit board, the firmware and the admin console are all part of the
           project. Build one, change it, or help improve it.
         </p>
       </div>

@@ -208,9 +208,6 @@ A firmware update also replaces the files stored on the device, which hold the s
 
 No backup? The data on your spools' tags is not affected: with autotag on, each tagged spool is imported again the next time it sits on the scale. Presets, unopened spools, locations and catalog changes have to be entered again.
 
-### Changes I made in the desktop app disappeared
-
-The desktop app copies data **from** the device every 30 seconds. Changes made while the device was offline are replaced by the device's data at the next copy. Make changes while the device is connected.
 
 ---
 

@@ -67,7 +67,7 @@ export default function ToS() {
         <h2>Open-source files, and our name</h2>
         <ul>
           <li>
-            <strong>Source and design files:</strong> the firmware, apps, CAD and PCB files are
+            <strong>Source and design files:</strong> the firmware, admin console, CAD and PCB files are
             published under the licenses in their repositories. Those licenses say what you may use,
             change and share.
           </li>

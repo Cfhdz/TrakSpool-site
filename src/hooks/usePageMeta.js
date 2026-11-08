@@ -6,7 +6,7 @@ import { useEffect } from "react";
 
 const BASE_TITLE = "TrakSpool";
 const DEFAULT_DESCRIPTION =
-  "TrakSpool is an open-source filament inventory system for 3D printing: a spool scale with an NFC tag reader that identifies every spool and tracks what is left. Open firmware, apps, enclosure and PCB files. No cloud, no subscription.";
+  "TrakSpool is an open-source filament inventory system for 3D printing: a spool scale with an NFC tag reader that identifies every spool and tracks what is left. Open firmware, web console, enclosure and PCB files. No cloud, no subscription.";
 
 export default function usePageMeta({ title, description } = {}) {
   useEffect(() => {

@@ -209,7 +209,6 @@ Firmware updates from [trakspool.com/flasher](https://trakspool.com/flasher) rep
 - **User Manual** — Complete documentation of all features and settings
 - **RFID Tag Guide** — Compatible tags, where to buy them, and placement tips
 - **Troubleshooting** — Common issues and solutions
-- **Backups** — Export your spools, presets and catalogs from the Spools page (see User Manual §9 and §14)
+- **Backups** — Export your spools, presets and catalogs from the Spools page (see User Manual §9 and §13)
 - **Unopened Inventory** — Track sealed spools before you open and tag them (see User Manual §11)
 - **Run Out Check (ROC)** — Verify you have enough filament before printing (see User Manual §12)
-- **Desktop Application** — Browse your inventory even when the device is off (see User Manual §13)

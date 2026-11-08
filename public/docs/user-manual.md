@@ -21,8 +21,7 @@ Complete reference for all TrakSpool features, settings, and workflows. For firs
 10. [Autotag System](#10-autotag-system)
 11. [Unopened Inventory](#11-unopened-inventory)
 12. [Run Out Check (ROC)](#12-run-out-check-roc)
-13. [Desktop Application](#13-desktop-application)
-14. [Updating the Firmware](#14-updating-the-firmware)
+13. [Updating the Firmware](#13-updating-the-firmware)
 
 ---
 
@@ -341,7 +340,7 @@ The top bar shows the page name and a light/dark switch.
 - **Font Size** — S, M, L or XL; scales the whole console
 - **Reset to Defaults**
 
-Settings are saved in the browser you use, not on the device. In the desktop app, Settings also has a **Device** section (see [Desktop Application](#13-desktop-application)).
+Settings are saved in the browser you use, not on the device.
 
 ### Dashboard
 
@@ -407,7 +406,7 @@ If any part cannot be read from the device, nothing is downloaded and the messag
 
 An unopened spool is matched together with its location, so a box you moved after making the backup is added again at its old location.
 
-> **Back up before every firmware update.** Updating replaces the data stored on the device. See [Updating the Firmware](#14-updating-the-firmware).
+> **Back up before every firmware update.** Updating replaces the data stored on the device. See [Updating the Firmware](#13-updating-the-firmware).
 
 ### Tag Spool Dialog
 
@@ -611,17 +610,13 @@ When you open a sealed spool, tag it from the **From Inventory** tab of the [Tag
 
 Tagging from a preset, by manual entry or on the device does not change the unopened count; reduce the quantity yourself.
 
-### Desktop App
-
-The desktop app shows your unopened inventory even when the device is offline. Changes made while the device is offline are not kept: the next time the app copies data from the device, the device's records replace them. Add, edit and remove unopened spools while the device is connected.
-
 ---
 
 ## 12. Run Out Check (ROC)
 
 Run Out Check tells you whether you have enough filament before you start a print. Load your sliced print file and ROC works out how much of each filament it needs, then searches your whole inventory, open and unopened spools, for spools that have enough.
 
-ROC is in the admin console under **Tools > Run Out Check** (on phones, under **More**) and in the desktop app.
+ROC is in the admin console under **Tools > Run Out Check** (on phones, under **More**).
 
 ### What Problem Does It Solve?
 
@@ -681,53 +676,7 @@ Unopened spools appear with a box icon and an "Unopened" label, with the quantit
 
 ---
 
-## 13. Desktop Application
-
-The TrakSpool desktop app runs the admin console in its own window and keeps a copy of your inventory on your computer, so you can look things up even when the device is off.
-
-### Key Points
-
-- **Offline viewing** — browse spools, presets and catalogs, and run Run Out Check, while the device is off or away
-- **Same console** — the same pages as the admin console in a browser
-- **Copies from the device** — while the device is online, the app copies its data every 30 seconds
-
-### Installation
-
-- **Windows:** run `TrakSpool-Setup-X.Y.Z.exe`. You can choose the install folder; the installer adds desktop and Start Menu shortcuts.
-- **macOS:** not available yet.
-
-The desktop app is open source: you can also build it from its source code.
-
-### Linking Your Device
-
-On first start, the app asks you to **Link Your Device**: enter the 4-character code from your device's name (the XXXX in `trakspool-XXXX.local`, shown in the device's Network menu) and click **Connect**. **Skip — Use Offline** starts without a device.
-
-You can link or change the device later in **Settings > Device**, which also shows whether the app is connected.
-
-### How It Works
-
-- **Device online:** the app sends each request to the device. If the device does not answer within 5 seconds, the app answers from its local copy instead.
-- **Device offline:** the app answers from its local copy. It looks for the device every 10 seconds and switches back when it is found.
-- **Copying:** data is copied **from** the device **to** the app, not the other way. Changes made while the device is offline (for example unopened spools, deleted spools or locations) are replaced by the device's data at the next copy. Make changes while the device is connected.
-
-### Works Offline
-
-- Viewing spools, presets, catalogs and storage locations
-- Run Out Check, using the local copy of your tagged and unopened spools
-
-### Needs the Device
-
-- Writing NFC tags
-- Live scale readings, tare and calibration
-- Autotag
-- Creating and editing presets
-- Editing catalogs
-- Importing a backup
-- Any change you want to keep
-
----
-
-## 14. Updating the Firmware
+## 13. Updating the Firmware
 
 Install new firmware from your browser at [trakspool.com/flasher](https://trakspool.com/flasher), using Chrome or Edge on a desktop computer and a USB-C cable. The page shows the latest version and its release notes.
 
