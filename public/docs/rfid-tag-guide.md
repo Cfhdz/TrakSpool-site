@@ -1,7 +1,7 @@
 # TrakSpool RFID Tag Guide
 
-**Firmware Version:** 0.1.1
-**Last Updated:** 2025-02-11
+**Firmware Version:** 2.0.1
+**Last Updated:** 2026-11-07
 
 This guide covers which NFC tags work with TrakSpool, where to buy them, how to place them on your spools, and how they interoperate with Prusa printers via the OpenPrintTag standard.
 
@@ -17,7 +17,7 @@ TrakSpool uses **NFC Type 5** tags, also known as **ISO 15693** or **NFC-V** tag
 |----------|-------------|
 | **NFC Standard** | Type 5 (ISO/IEC 15693) |
 | **Recommended IC** | NXP ICODE SLIX2 |
-| **Minimum Memory** | 312 bytes usable (80 blocks x 4 bytes) |
+| **Memory** | 320 bytes (80 blocks x 4 bytes) |
 | **Protocol** | NFC-V (Vicinity, 13.56 MHz) |
 
 The PN5180 reader in TrakSpool communicates with these tags using the ISO 15693 protocol, reading and writing data in 4-byte blocks.
@@ -29,7 +29,7 @@ The PN5180 reader in TrakSpool communicates with these tags using the ISO 15693 
 The **NXP ICODE SLIX2** is the tag IC used by the OpenPrintTag specification and by Prusa on their filament spools. It provides:
 
 - 80 blocks of 4 bytes each = **320 bytes** total memory
-- ~312 bytes usable after NDEF overhead
+- About 282 bytes left for the filament data after the NDEF wrapper (capability container, TLV, record header and MIME type)
 - Read range suitable for close-proximity mounting on spool hubs
 - Write-lockable blocks (optional, for manufacturers who want to protect data)
 
@@ -75,9 +75,9 @@ These common NFC tag types are **not compatible** with TrakSpool:
 | **MIFARE Ultralight** | NFC Type 2, insufficient memory |
 | **MIFARE DESFire** | ISO 14443-A, wrong protocol |
 | **NFC Type 1 / Type 3 / Type 4** | Wrong NFC type |
-| **ISO 15693 tags with < 312 bytes** | Insufficient memory for OpenPrintTag payload |
+| **ISO 15693 tags with less than 320 bytes** (e.g. the original ICODE SLIX, 112 bytes) | Insufficient memory for the OpenPrintTag data |
 
-If you're unsure whether a tag is compatible, check the datasheet for "ISO 15693" and "ICODE SLIX2" (or at minimum, NFC Type 5 with 320+ bytes).
+If you're unsure whether a tag is compatible, check the datasheet for "ISO 15693" and "ICODE SLIX2" (or at minimum, NFC Type 5 with 320 bytes or more).
 
 ---
 
@@ -99,7 +99,7 @@ The PN5180 NFC reader on the TrakSpool device has a read range of a few centimet
 
 For reliable auto-detection:
 - The tag should be within ~2-3cm of the reader antenna
-- The device detects tag presence automatically every 250ms
+- While Auto-tag is on, the device checks for a tag every 250ms (pausing for 1 second after each write)
 - Presence is confirmed after 300ms of stable detection
 - Removal is confirmed after 500ms of no detection
 
@@ -109,19 +109,23 @@ For reliable auto-detection:
 
 TrakSpool writes data in **OpenPrintTag (OPT) format**, wrapped in an **NDEF container**. The data is CBOR-encoded and includes:
 
-**Main region** (written once, at tag creation):
-- Brand name
-- Material type (PLA, PETG, TPU, etc.)
+**Main region** (written at tag creation):
+- Brand name and brand UUID
+- Material class, material type (PLA, PETG, TPU, etc.) and material UUID
 - Material name — optional derivative or variant (e.g. CF, Matte, Silk, High-Speed)
 - Primary color (RGB)
-- Nominal net weight (full spool weight in grams)
+- Nominal net weight (filament weight of a full spool, in grams)
+- Actual net weight (set to the nominal weight)
 - Empty container weight (empty spool weight)
-- Instance UUID (derived from tag UID)
+- Print, bed, preheat and drying temperatures
+- Instance UUID (derived from the tag UID; a random one if that fails)
 
 **Auxiliary region** (updated automatically during use):
-- Consumed weight (grams used, updated by autotag)
+- Consumed weight (grams used; 0 when the tag is created, then updated by autotag)
 
-The main region is written at tagging time and typically doesn't change. The auxiliary region is updated in-place whenever the autotag system detects that material has been consumed.
+The main region is written at tagging time and normally doesn't change. The one exception: when you accept an **Empty Weight Correction** (see the User Manual), the new empty container weight is written to the main region. The auxiliary region is updated in place whenever autotag detects that material has been consumed.
+
+A blank tag is formatted for NDEF automatically the first time TrakSpool writes it.
 
 ---
 
@@ -158,11 +162,11 @@ For reference, here's how the 320 bytes of ICODE SLIX2 memory are used:
 - **CC bytes**: Capability Container (4 bytes, identifies tag as NDEF-formatted)
 - **NDEF TLV**: Type-Length-Value wrapper containing the OPT record
 - **Meta section**: Defines offsets and sizes of the main and aux regions
-- **Main region**: Brand, material type, material name, color, weights (immutable after write)
+- **Main region**: Brand, material, color, weights and temperatures (changes only on an empty weight correction or a re-tag)
 - **Aux region**: Consumed weight (updated in-place by autotag)
 - **Terminator TLV**: Marks the end of NDEF data
 
-The total OPT payload fits comfortably within the 312 usable bytes.
+The filament data must fit in about 282 bytes; the firmware refuses a write that would not fit.
 
 ---
 
@@ -178,7 +182,7 @@ Yes. TrakSpool reads and writes the same OpenPrintTag format. You can update the
 Yes. TrakSpool preserves the OpenPrintTag format, so Prusa printers can still read the material data.
 
 **How many write cycles do ICODE SLIX2 tags support?**
-NXP specifies at least 100,000 write cycles per block. Since autotag only updates the aux region (consumed weight), a single tag can handle extensive use.
+NXP specifies at least 100,000 write cycles per block. Autotag updates only the aux region (consumed weight), at most once a minute, so a single tag can handle extensive use.
 
 **Can I write-protect my tags?**
 The ICODE SLIX2 supports per-block write protection. TrakSpool does not currently use this feature, but manufacturers can lock the main region to prevent overwriting brand/material data while leaving the aux region writable for consumption tracking.

@@ -12,7 +12,6 @@
 - [ ] Fill in the Build it guide (`/build`): photos into `public/build/`, then each step's `images`, `instructions` and `tip` in `src/data/buildGuide.js`, plus the "At a glance" facts (time, difficulty, skills) and the full tool list. The step titles are an outline; rename, add or remove steps there. Steps 1–5 (hardware) have no instructions yet.
 - [ ] Publish the API reference and contributing guide; they are "Coming soon" cards on the Docs page (`src/pages/Resources.jsx`).
 - [ ] `public/og-image.png` (social preview) still shows the old violet / cyan design.
-- [ ] The user docs in `public/docs/` (copied from TrakSpool-docs) still describe a boxed product ("What's in the Box") and firmware 0.1.1 in their headers. Update them in TrakSpool-docs, then copy them here.
 - [ ] Privacy and Terms: the text was kept, apart from removing the waitlist section and the "don't redistribute" clause. Review it against what the site actually uses (Vercel Web Analytics, esp-web-tools from unpkg.com on the updater page).
 
 ## UI/UX Modernization

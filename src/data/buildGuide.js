@@ -26,7 +26,7 @@ export const PARTS = [
   { part: "Rotary encoder, Confirm and Back buttons", role: "On-device controls" },
   { part: "TrakSpool PCB", role: "Connects the parts (see Files)" },
   { part: "3D-printed enclosure and spool holder", role: "Printed from the CAD files (see Files)" },
-  { part: "NFC Type 5 tags, such as ICODE SLIX", role: "One per spool" },
+  { part: "NXP ICODE SLIX2 NFC tags (ISO 15693, Type 5)", role: "One per spool; 320 bytes of memory needed" },
   { part: "USB-C cable and a 5 V USB supply", role: "Power" },
 ];
 

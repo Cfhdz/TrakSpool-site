@@ -66,7 +66,7 @@ const FAQ_GROUPS = [
       },
       {
         q: "What RFID tags are compatible?",
-        a: "TrakSpool uses ISO 15693 (NFC Type 5) tags, such as NXP ICODE SLIX, and follows the OpenPrintTag standard. Compatible tags are widely available online.",
+        a: "TrakSpool uses NXP ICODE SLIX2 tags (ISO 15693, NFC Type 5, 320 bytes), the same chip Prusament spools carry, and follows the OpenPrintTag standard. Smaller ISO 15693 tags, such as the original ICODE SLIX, cannot hold the data. The RFID Tag Guide lists what to buy.",
       },
       {
         q: "What size spools does it fit?",

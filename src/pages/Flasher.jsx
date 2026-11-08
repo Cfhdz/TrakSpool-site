@@ -1,7 +1,7 @@
 // File: src/pages/Flasher.jsx
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Usb } from "lucide-react";
+import { TriangleAlert, Usb } from "lucide-react";
 import usePageMeta from "../hooks/usePageMeta.js";
 import Steps from "../components/Steps.jsx";
 import "./Flasher.css";
@@ -17,10 +17,17 @@ const INSTALL_TAG = "esp-web-install-button";
 const INSTALL_SCRIPT = "https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module";
 
 const STEPS = [
+  {
+    title: "Back up",
+    text: "In the admin console, open Spools and click Export. Keep the file: the update replaces the spools, presets and catalogs stored on the device.",
+  },
   { title: "Connect", text: "Plug your TrakSpool into this computer with a USB-C cable." },
   { title: "Update", text: "Click Update Firmware and pick your device from the list." },
   { title: "Wait", text: "The update takes about 30 seconds. Don't unplug the device while it runs." },
-  { title: "Done", text: "TrakSpool restarts by itself with the new firmware." },
+  {
+    title: "Restore",
+    text: "TrakSpool restarts with the new firmware. Reload the admin console, open Spools, click Import and choose your backup.",
+  },
 ];
 
 const TROUBLESHOOTING = [
@@ -30,15 +37,15 @@ const TROUBLESHOOTING = [
   },
   {
     q: "Update failed or device won't boot?",
-    a: "Don't worry: TrakSpool has a built-in safe mode. If the firmware fails to boot three times, it enters recovery mode by itself. Double-press the reset button to enter bootloader mode and try the update again.",
+    a: "Unplug the device and plug it back in. If it still won't start, double-press the reset button to put the board into bootloader mode (the RGB LED pulses green), then click Update Firmware and run the update again.",
   },
   {
     q: "I'm not using Chrome or Edge",
     a: "The browser updater needs the Web Serial API, which only Chrome and Edge on desktop have; Firefox and Safari do not. Without them, you can build the firmware from source and upload it with PlatformIO (see the Files page), or contact us for help.",
   },
   {
-    q: "Do I need to update the filesystem too?",
-    a: "Most updates only need a firmware update, which is what this tool does. If a release needs a filesystem update, its release notes say so and include separate instructions.",
+    q: "Does updating erase my data?",
+    a: "Partly. The update installs the firmware and the device's file system, which holds the admin console and your data: the spool list, presets, unopened inventory, locations and catalog changes. That data is replaced. Wi-Fi settings, scale calibration, the autotag setting and the refill threshold are kept. Export a backup before you update and import it afterwards. Your spools' tags keep their own data: with autotag on, a tagged spool is imported again when it next sits on the scale.",
   },
 ];
 
@@ -83,6 +90,14 @@ export default function Flasher() {
           <p className="eyebrow">Latest firmware</p>
           <div className="versionNumber">v{FIRMWARE_VERSION}</div>
           <div className="versionDate">Released {FIRMWARE_RELEASED}</div>
+          <p className="alert t-warning">
+            <TriangleAlert aria-hidden="true" />
+            <span>
+              <strong>Back up first.</strong> Updating replaces the spools, presets and catalogs stored
+              on the device. In the admin console, open Spools and click Export; afterwards, Import
+              the file.
+            </span>
+          </p>
           <esp-web-install-button manifest="/flasher/manifest.json">
             <button slot="activate" className="btn btn--lg" type="button">
               <Usb aria-hidden="true" />
